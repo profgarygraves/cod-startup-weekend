@@ -8,7 +8,7 @@ const STATUS_LABELS = {
   complete: "✅ Complete",
 };
 
-export default function Section({ section, status, onStatusChange, profile, defaultOpen }) {
+export default function Section({ section, status, onStatusChange, profile, defaultOpen, extra }) {
   const [open, setOpen] = useState(defaultOpen || false);
   const [copied, setCopied] = useState(null);
 
@@ -163,6 +163,9 @@ export default function Section({ section, status, onStatusChange, profile, defa
               })}
             </div>
           </div>
+
+          {/* Section-specific extra (e.g. Website Wizard) */}
+          {extra}
 
           {/* Pro Tip */}
           {section.tips && (
