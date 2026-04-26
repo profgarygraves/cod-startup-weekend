@@ -37,7 +37,7 @@ export default function StickyNav() {
     <nav className={`sticky-nav ${visible ? "sticky-nav--visible" : ""}`}>
       <div className="sticky-nav__inner">
         <div className="sticky-nav__brand">
-          <img src="/cod-logo.png" alt="COD" className="sticky-nav__logo" />
+          <img src={`${import.meta.env.BASE_URL}cod-logo.png`} alt="COD" className="sticky-nav__logo" />
           <span>AI Startup Weekend</span>
         </div>
         <div className="sticky-nav__links">

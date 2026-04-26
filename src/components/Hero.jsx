@@ -9,7 +9,7 @@ export default function Hero({ onStart }) {
       <div className="hero__bg-grid" />
       <div className="hero__content">
         <div className="hero__logo-wrap">
-          <img src="/cod-logo.png" alt="College of the Desert" className="hero__logo" />
+          <img src={`${import.meta.env.BASE_URL}cod-logo.png`} alt="College of the Desert" className="hero__logo" />
         </div>
         <h1 className="hero__title">
           COD AI<br />
