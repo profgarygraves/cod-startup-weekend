@@ -6,6 +6,7 @@ import Section from "./components/Section";
 import ProgressTracker from "./components/ProgressTracker";
 import ToolsReference from "./components/ToolsReference";
 import VentureProfile from "./components/VentureProfile";
+import WebsiteWizard from "./components/WebsiteWizard";
 import { DAY1_SECTIONS, DAY2_SECTIONS, POST_SECTIONS } from "./data/sections";
 import { usePersistentState } from "./lib/storage";
 import "./App.css";
@@ -92,6 +93,7 @@ export default function App() {
                 status={statuses[s.id]}
                 onStatusChange={handleStatusChange}
                 profile={profile}
+                extra={s.id === "digital-presence" ? <WebsiteWizard profile={profile} /> : null}
               />
             ))}
           </div>
