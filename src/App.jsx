@@ -1,24 +1,39 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import StickyNav from "./components/StickyNav";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
 import Section from "./components/Section";
 import ProgressTracker from "./components/ProgressTracker";
 import ToolsReference from "./components/ToolsReference";
+import VentureProfile from "./components/VentureProfile";
 import { DAY1_SECTIONS, DAY2_SECTIONS, POST_SECTIONS } from "./data/sections";
+import { usePersistentState } from "./lib/storage";
 import "./App.css";
 
 const ALL_SECTIONS = [...DAY1_SECTIONS, ...DAY2_SECTIONS, ...POST_SECTIONS];
 
-const initialStatus = () =>
-  Object.fromEntries(ALL_SECTIONS.map((s) => [s.id, "not-started"]));
+const INITIAL_STATUSES = Object.fromEntries(
+  ALL_SECTIONS.map((s) => [s.id, "not-started"])
+);
+
+const INITIAL_PROFILE = {
+  teamName: "",
+  members: "",
+  ideaName: "",
+  description: "",
+  problem: "",
+  audience: "",
+  offer: "",
+  price: "",
+};
 
 export default function App() {
-  const [statuses, setStatuses] = useState(initialStatus);
+  const [statuses, setStatuses] = usePersistentState("cod-sw-statuses", INITIAL_STATUSES);
+  const [profile, setProfile] = usePersistentState("cod-sw-profile", INITIAL_PROFILE);
 
   const handleStatusChange = useCallback((id, status) => {
     setStatuses((prev) => ({ ...prev, [id]: status }));
-  }, []);
+  }, [setStatuses]);
 
   const progress = {
     total: ALL_SECTIONS.length,
@@ -37,6 +52,7 @@ export default function App() {
       <HowItWorks />
 
       <div className="container" style={{ paddingTop: "2rem" }}>
+        <VentureProfile profile={profile} onChange={setProfile} />
         <ProgressTracker progress={progress} />
       </div>
 
@@ -54,6 +70,7 @@ export default function App() {
                 section={s}
                 status={statuses[s.id]}
                 onStatusChange={handleStatusChange}
+                profile={profile}
               />
             ))}
           </div>
@@ -74,6 +91,7 @@ export default function App() {
                 section={s}
                 status={statuses[s.id]}
                 onStatusChange={handleStatusChange}
+                profile={profile}
               />
             ))}
           </div>
@@ -94,6 +112,7 @@ export default function App() {
                 section={s}
                 status={statuses[s.id]}
                 onStatusChange={handleStatusChange}
+                profile={profile}
               />
             ))}
           </div>
