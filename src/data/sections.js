@@ -6,6 +6,9 @@ export const DAY1_SECTIONS = [
     collapsed_label: "💡 Generate & Validate Your Business Idea",
     title: "Brainstorming & Idea Development",
     objective: "Generate a viable business idea using AI that could reach $1,000/month.",
+    whatWereDoing: "Generating, screening, and committing to one viable business idea.",
+    whyItMatters: "Everything downstream — research, pricing, branding — only works once you've picked a direction worth chasing.",
+    suggestedTime: "~Sat 9:00–10:30am",
     tasks: [
       "Generate 10+ business ideas using AI",
       "Narrow to top 3 ideas",
@@ -36,6 +39,9 @@ export const DAY1_SECTIONS = [
     collapsed_label: "🎯 Understand Your Customer Deeply",
     title: "Target Market & Customer Research",
     objective: "Understand your customer deeply to build something people actually want.",
+    whatWereDoing: "Defining exactly who your first customer is and why they'd buy.",
+    whyItMatters: "You can't sell to everyone. The startups that win pick one specific person and go deep.",
+    suggestedTime: "~Sat 10:30am–12:00pm",
     tasks: [
       "Create 2–3 detailed customer personas",
       "Identify top customer pain points",
@@ -66,6 +72,9 @@ export const DAY1_SECTIONS = [
     collapsed_label: "💰 Design Your Revenue Model",
     title: "Pricing Strategy & Business Model",
     objective: "Design a business model that can realistically generate $1,000/month in revenue.",
+    whatWereDoing: "Designing how money flows in — what to charge, who pays, and how often.",
+    whyItMatters: "$1,000/month is just 10 customers at $100 OR 100 customers at $10. Pricing decides which game you're playing.",
+    suggestedTime: "~Sat 1:00–2:30pm",
     tasks: [
       "Choose a pricing model (subscription, one-time, freemium, etc.)",
       "Reverse engineer what it takes to hit $1,000/month",
@@ -95,6 +104,9 @@ export const DAY1_SECTIONS = [
     collapsed_label: "🛠️ Create a Visual Prototype",
     title: "Prototype Creation",
     objective: "Create a tangible visual or service prototype investors and customers can react to.",
+    whatWereDoing: "Building something real enough that a customer can react to it.",
+    whyItMatters: "Real proof beats hypothetical pitches. A scrappy mockup gets you a 'yes, I'd pay' that no slide deck ever will.",
+    suggestedTime: "~Sat 2:30–5:00pm",
     tasks: [
       "Create UI mockup OR service flow diagram",
       "Draft your offer description (what exactly customers get)",
@@ -127,6 +139,9 @@ export const DAY2_SECTIONS = [
     collapsed_label: "🎨 Build Your Brand Identity",
     title: "Brand Identity",
     objective: "Create a professional, memorable brand that builds instant trust.",
+    whatWereDoing: "Naming, designing, and packaging your business so it feels trustworthy.",
+    whyItMatters: "Customers judge your brand in 3 seconds. A clean brand earns you the right to be heard.",
+    suggestedTime: "~Sun 9:00–10:30am",
     tasks: [
       "Finalize your business name",
       "Design a logo",
@@ -159,6 +174,9 @@ export const DAY2_SECTIONS = [
     collapsed_label: "🌐 Launch Your Online Presence",
     title: "Website, Video & Digital Presence",
     objective: "Launch your business online so customers can find, trust, and buy from you.",
+    whatWereDoing: "Putting your business online — a website, video, and social presence.",
+    whyItMatters: "If you can't be found, you don't exist. Today this is your storefront, business card, and salesperson rolled into one.",
+    suggestedTime: "~Sun 10:30am–1:00pm",
     tasks: [
       "Build a 3-5 page website using Framer.ai",
       "Create a 30-second video commercial",
@@ -191,6 +209,9 @@ export const DAY2_SECTIONS = [
     collapsed_label: "📣 Launch a $50 Marketing Campaign",
     title: "$50 Marketing Strategy",
     objective: "Design and execute a real-world marketing plan on a lean $50 budget.",
+    whatWereDoing: "Spending a real $50 to reach real strangers and learn what works.",
+    whyItMatters: "Marketing without testing is theory. Putting actual money in the market is the fastest way to learn what your audience cares about.",
+    suggestedTime: "~Sun 1:00–2:30pm",
     tasks: [
       "Allocate the $50 budget across channels",
       "Create 2–3 ad creatives",
@@ -222,6 +243,9 @@ export const DAY2_SECTIONS = [
     collapsed_label: "🏆 Deliver Your Pitch",
     title: "Pitch & Presentation",
     objective: "Deliver a compelling, confident 5-minute business pitch that wins judges over.",
+    whatWereDoing: "Telling your business story in 5 minutes so judges and customers feel it.",
+    whyItMatters: "Great ideas die in bad pitches. Explaining your business clearly is the skill you'll use every day forever.",
+    suggestedTime: "~Sun 3:00–5:00pm",
     tasks: [
       "Create a 10-slide pitch deck",
       "Practice your pitch with AI feedback",
@@ -256,6 +280,9 @@ export const POST_SECTIONS = [
     collapsed_label: "📈 6-Month Growth Cohort",
     title: "Growth & Accountability",
     objective: "Turn your weekend idea into real monthly income through structured accountability.",
+    whatWereDoing: "Setting up a 6-month cadence to actually go from prototype to paying customers.",
+    whyItMatters: "Most weekend ideas die on Monday. Structure, accountability, and a cohort are how you stop that from happening to yours.",
+    suggestedTime: "Starts the Monday after the weekend",
     tasks: [
       "Complete Canvas LMS onboarding module",
       "Set your 30/60/90-day revenue milestones",
