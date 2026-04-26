@@ -7,6 +7,7 @@ import ProgressTracker from "./components/ProgressTracker";
 import ToolsReference from "./components/ToolsReference";
 import VentureProfile from "./components/VentureProfile";
 import WebsiteWizard from "./components/WebsiteWizard";
+import ExportWorkbook from "./components/ExportWorkbook";
 import { DAY1_SECTIONS, DAY2_SECTIONS, POST_SECTIONS } from "./data/sections";
 import { usePersistentState } from "./lib/storage";
 import "./App.css";
@@ -28,9 +29,23 @@ const INITIAL_PROFILE = {
   price: "",
 };
 
+const INITIAL_WEBSITE = {
+  headline: "",
+  subheadline: "",
+  heroVisual: "",
+  offerHeadline: "",
+  offerBullets: "",
+  ctaText: "",
+  founderName: "",
+  founderBio: "",
+  formType: "email",
+  publishedUrl: "",
+};
+
 export default function App() {
   const [statuses, setStatuses] = usePersistentState("cod-sw-statuses", INITIAL_STATUSES);
   const [profile, setProfile] = usePersistentState("cod-sw-profile", INITIAL_PROFILE);
+  const [website] = usePersistentState("cod-sw-website", INITIAL_WEBSITE);
 
   const handleStatusChange = useCallback((id, status) => {
     setStatuses((prev) => ({ ...prev, [id]: status }));
@@ -55,6 +70,12 @@ export default function App() {
       <div className="container" style={{ paddingTop: "2rem" }}>
         <VentureProfile profile={profile} onChange={setProfile} />
         <ProgressTracker progress={progress} />
+        <ExportWorkbook
+          profile={profile}
+          statuses={statuses}
+          website={website}
+          sections={ALL_SECTIONS}
+        />
       </div>
 
       <section className="roadmap-day" id="day1">
