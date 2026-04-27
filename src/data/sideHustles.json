@@ -1,0 +1,596 @@
+[
+  {
+    "name": "Academic writing and editing services",
+    "description": "Assist students and professionals in refining their written work, providing editing, proofreading, and content suggestions for essays, reports, and other documents, charging on a per-project or per-page basis.",
+    "category": "Education and Tutoring",
+    "investment": "low"
+  },
+  {
+    "name": "Adult education classes (e.g., computer literacy, financial planning)",
+    "description": "Offer classes in topics such as computer literacy, financial planning, and cooking to adults seeking to learn new skills or hobbies, charging a fee for enrollment in each class.",
+    "category": "Education and Tutoring",
+    "investment": "low"
+  },
+  {
+    "name": "Artisan marketplace platform",
+    "description": "Create a platform for local or handmade artisans to sell their products, charging fees or commissions on each sale facilitated through the platform.",
+    "category": "E-Commerce and Sales",
+    "investment": "medium"
+  },
+  {
+    "name": "Beauty products online store",
+    "description": "Curate and sell a selection of beauty and skincare products, charging a markup on each product to cover costs and generate profit.",
+    "category": "E-Commerce and Sales",
+    "investment": "low"
+  },
+  {
+    "name": "Branding strategy consulting",
+    "description": "Charge clients for branding strategy consulting services, helping businesses define and strengthen their brand identity through strategic guidance on brand positioning, messaging, and visual elements.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Career counseling services",
+    "description": "Provide career guidance and counseling to individuals seeking job transitions or advancement, offering services such as resume review, interview preparation, and job search strategies for a fee.",
+    "category": "Education and Tutoring",
+    "investment": "medium"
+  },
+  {
+    "name": "Coding and programming classes",
+    "description": "Teach beginners the basics of coding and programming languages through structured classes or workshops, helping them build technical skills and charge a fee for each class or course.",
+    "category": "Education and Tutoring",
+    "investment": "medium"
+  },
+  {
+    "name": "College admissions consulting",
+    "description": "Guide students through the college admissions process, including essay editing, application strategy, and interview preparation, providing comprehensive consulting services for a fee.",
+    "category": "Education and Tutoring",
+    "investment": "medium"
+  },
+  {
+    "name": "Creative upcycling and repurposing services for furniture and home decor items",
+    "description": "Offer creative upcycling and repurposing services for furniture and home decor items, transforming outdated pieces into unique and stylish creations for sale or custom orders.",
+    "category": "Creative Services",
+    "investment": "high"
+  },
+  {
+    "name": "Custom calligraphy and hand-lettering services",
+    "description": "Charge clients for creating personalized and beautifully hand-lettered designs for special occasions like weddings, events, or home decor items.",
+    "category": "Creative Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Custom clothing alterations and embellishments",
+    "description": "Provide custom clothing alterations and embellishments services for individuals looking to personalize their wardrobe, charging fees based on the alterations and design complexity.",
+    "category": "Creative Services",
+    "investment": "low"
+  },
+  {
+    "name": "Custom digital illustrations for books or publications",
+    "description": "Offer custom digital illustrations for books, magazines, or online publications, charging clients on a per-project basis or through licensing agreements.",
+    "category": "Creative Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Custom portrait illustrations",
+    "description": "Offer custom digital illustrations for personal or professional use, charging fees based on the size, complexity, and medium of the artwork.",
+    "category": "Creative Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Custom wall murals and art installations",
+    "description": "Create custom wall murals and art installations for homes, offices, or public spaces, charging clients based on the size, complexity, and materials used.",
+    "category": "Creative Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Customized vinyl decals and stickers",
+    "description": "Design and sell custom vinyl decals and stickers for personalization and branding purposes, earning income through online sales or partnerships with retailers.",
+    "category": "Creative Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Customized wedding signage and paper goods",
+    "description": "Create custom wedding signage and paper goods such as invitations, programs, and signs, charging clients for design services and printing costs.",
+    "category": "Creative Services",
+    "investment": "low"
+  },
+  {
+    "name": "Digital content writing and editing",
+    "description": "Make money by providing digital content writing and editing services to clients, charging for creating compelling and SEO-optimized content for websites, blogs, and online platforms.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Digital downloads store",
+    "description": "Create and sell digital products such as e-books, printables, or templates, earning revenue through sales without the need for physical inventory or shipping.",
+    "category": "E-Commerce and Sales",
+    "investment": "medium"
+  },
+  {
+    "name": "Digital marketing consulting",
+    "description": "As a digital marketing consultant, you can earn income by providing businesses with personalized guidance on optimizing their marketing efforts, charging either hourly rates or project-based fees for your expertise.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Digital product design and development",
+    "description": "Charge clients for digital product design and development services, earning income through project-based fees for designing and developing digital products, such as apps, software, or digital content.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Digital product photography",
+    "description": "By providing digital product photography services, you can charge clients for high-quality images of their products, either on a per-project basis or through packages that include multiple images.",
+    "category": "Business Services",
+    "investment": "low"
+  },
+  {
+    "name": "DIY craft kits and workshops",
+    "description": "Create and sell DIY craft kits or host workshops for crafting enthusiasts, earning revenue through kit sales, workshop fees, and materials.",
+    "category": "Creative Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Dropshipping store",
+    "description": "Start an online store where customers purchase products that are then shipped directly from the supplier, allowing you to make a profit on the price difference without handling inventory or shipping.",
+    "category": "E-Commerce and Sales",
+    "investment": "low"
+  },
+  {
+    "name": "E-commerce store setup and optimization",
+    "description": "Generate revenue by setting up and optimizing e-commerce websites for clients, charging fees for website setup, customization, product listings, and ongoing optimization services.",
+    "category": "Business Services",
+    "investment": "low"
+  },
+  {
+    "name": "eBook writing and publishing",
+    "description": "Earn revenue by offering eBook writing and publishing services, charging fees for creating, formatting, and publishing eBooks on behalf of clients or yourself to sell to a target audience.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Elderly care and companionship",
+    "description": "Provide companionship and assistance to elderly individuals, offering services such as companionship, transportation, and errand running, charging an hourly rate for caregiving services.",
+    "category": "Home and Lifestyle Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Email marketing services",
+    "description": "Earn money by offering email marketing services to clients, charging either a monthly retainer or per-campaign fee for creating and executing email marketing campaigns that drive engagement and conversions.",
+    "category": "Business Services",
+    "investment": "low"
+  },
+  {
+    "name": "Event invitation design",
+    "description": "Provide event invitation design services for weddings, parties, and special events, charging clients design fees per invitation or package rates for multiple designs.",
+    "category": "Creative Services",
+    "investment": "low"
+  },
+  {
+    "name": "Event planning and coordination",
+    "description": "Assist clients with planning and organizing special events and occasions, offering services such as event design, vendor coordination, and day-of event management, charging a fee based on the event's size and complexity.",
+    "category": "Home and Lifestyle Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Freelance content writing",
+    "description": "Make money by offering content creation services for blogs and websites, charging clients for SEO-optimized articles, blog posts, and website content that drive traffic and engagement.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Furniture assembly and installation",
+    "description": "Assemble and install furniture pieces for clients who need assistance with furniture setup, charging a fee per item or per project for furniture assembly services.",
+    "category": "Home and Lifestyle Services",
+    "investment": "low"
+  },
+  {
+    "name": "Gardening and landscaping",
+    "description": "Create beautiful outdoor spaces by offering gardening and landscaping services, including plant care, lawn maintenance, and garden design, charging per project or on hourly rates.",
+    "category": "Home and Lifestyle Services",
+    "investment": "low"
+  },
+  {
+    "name": "Gift basket design and assembly",
+    "description": "Offer creative gift basket design and assembly services for special occasions, charging clients for the products included and your design services.",
+    "category": "Creative Services",
+    "investment": "high"
+  },
+  {
+    "name": "Graphic design for social media",
+    "description": "Monetize your graphic design skills for social media by charging clients for creating custom graphics for their social media platforms, offering packages or hourly rates for your design services.",
+    "category": "Business Services",
+    "investment": "high"
+  },
+  {
+    "name": "Green cleaning and eco-services",
+    "description": "Offer environmentally-friendly cleaning services using eco-friendly products and practices, attracting clients interested in green lifestyles and charging for cleaning services with a green focus.",
+    "category": "Home and Lifestyle Services",
+    "investment": "high"
+  },
+  {
+    "name": "Handmade crafts store",
+    "description": "Sell unique handmade items created by you or other artisans, charging a markup on the materials and labor costs to generate revenue.",
+    "category": "E-Commerce and Sales",
+    "investment": "high"
+  },
+  {
+    "name": "Handmade greeting cards and stationery",
+    "description": "Create and sell handmade greeting cards and stationery products online or at local markets, earning revenue through product sales.",
+    "category": "Creative Services",
+    "investment": "high"
+  },
+  {
+    "name": "Handmade jewelry design and creation",
+    "description": "Design and create handmade jewelry pieces to sell online or at craft fairs, earning revenue through product sales.",
+    "category": "Creative Services",
+    "investment": "high"
+  },
+  {
+    "name": "Health and wellness coaching",
+    "description": "Offer coaching services to individuals looking to improve their overall health and well-being, providing guidance on nutrition, fitness, and lifestyle habits, and charging for personalized coaching packages.",
+    "category": "Education and Tutoring",
+    "investment": "high"
+  },
+  {
+    "name": "Holiday decorating services",
+    "description": "Help clients decorate their homes for holidays and special occasions, offering seasonal decorating services and charging for decoration setup and removal based on the scope of the project.",
+    "category": "Home and Lifestyle Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Home cleaning and housekeeping",
+    "description": "Provide thorough cleaning and maintenance services for residential properties, charging an hourly rate or a flat fee for regular cleaning services and deep cleaning projects.",
+    "category": "Home and Lifestyle Services",
+    "investment": "high"
+  },
+  {
+    "name": "Home decor online shop",
+    "description": "Sell a variety of home decor and interior design products, earning a profit margin on each item sold by leveraging trends and unique design offerings.",
+    "category": "E-Commerce and Sales",
+    "investment": "high"
+  },
+  {
+    "name": "Home organization and decluttering",
+    "description": "Help clients streamline their living spaces and organize their belongings efficiently, charging a fee for consultation, hands-on organizing, and personalized organization plans.",
+    "category": "Home and Lifestyle Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Home repair and maintenance",
+    "description": "Provide handyman services and home repairs, including basic plumbing, electrical work, and general maintenance tasks, charging a fee per project or hourly for service.",
+    "category": "Home and Lifestyle Services",
+    "investment": "low"
+  },
+  {
+    "name": "Home staging for real estate",
+    "description": "Prepare homes for sale by showcasing them in the best light to attract buyers, charging a fee for staging services that enhance the property's appeal and market value.",
+    "category": "Home and Lifestyle Services",
+    "investment": "low"
+  },
+  {
+    "name": "Home tech support",
+    "description": "Assist clients with troubleshooting technology issues and setting up home electronics and gadgets, offering tech support services and charging a fee per visit or per tech support task.",
+    "category": "Home and Lifestyle Services",
+    "investment": "low"
+  },
+  {
+    "name": "Homework help for K-12 students",
+    "description": "Assist K-12 students with their homework assignments, offering guidance and support in completing tasks in various subjects, charging an hourly rate or per session for tutoring services.",
+    "category": "Education and Tutoring",
+    "investment": "low"
+  },
+  {
+    "name": "Influencer management services",
+    "description": "Collaborate with influencers and earn money by helping them secure and manage sponsored content deals, affiliate marketing partnerships, or brand collaborations that promote products or services to a larger audience.",
+    "category": "Business Services",
+    "investment": "low"
+  },
+  {
+    "name": "Interior design consultations",
+    "description": "Provide professional design advice and solutions for clients looking to enhance their interiors, charging for design consultations, mood boards, and recommendations for furniture and decor.",
+    "category": "Home and Lifestyle Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Interior design mood boards and styling consultations",
+    "description": "Offer interior design mood boards and styling consultations for clients seeking design inspiration, charging fees for your design services and recommendations.",
+    "category": "Creative Services",
+    "investment": "low"
+  },
+  {
+    "name": "Language tutoring (e.g., ESL)",
+    "description": "Teach language learners through tailored lessons and conversation practice, helping them improve their language skills and fluency, and charge for tutoring services based on the number of lessons or hours.",
+    "category": "Education and Tutoring",
+    "investment": "medium"
+  },
+  {
+    "name": "Laundry and ironing services",
+    "description": "Provide laundry washing, drying, folding, and ironing services for clients who need help with their laundry tasks, charging per load or by the hour for laundry services.",
+    "category": "Home and Lifestyle Services",
+    "investment": "low"
+  },
+  {
+    "name": "Merchandise design",
+    "description": "Collaborate with businesses or individuals to design custom graphics for merchandise, and earn income through design fees or royalties on sales.",
+    "category": "Creative Services",
+    "investment": "low"
+  },
+  {
+    "name": "Music lessons (e.g., piano, guitar, violin)",
+    "description": "Provide one-on-one music lessons to students of all ages, teaching them how to play an instrument or improve their musical skills, and charge a fee for individual sessions or lesson packages.",
+    "category": "Education and Tutoring",
+    "investment": "low"
+  },
+  {
+    "name": "Online advertising management",
+    "description": "Offer online advertising campaigns management services and earn money by charging clients for managing and optimizing their online ad campaigns, earning a percentage of the ad spend or charging a flat fee.",
+    "category": "Business Services",
+    "investment": "low"
+  },
+  {
+    "name": "Online community management",
+    "description": "Build and manage online communities for businesses or organizations, and earn money through membership fees, sponsored content, and partnerships with brands looking to reach your engaged community.",
+    "category": "Business Services",
+    "investment": "low"
+  },
+  {
+    "name": "Online course creation and consulting",
+    "description": "Create online courses and earn revenue through course sales, subscriptions, or membership fees, leveraging your expertise to provide valuable educational content to a wide audience.",
+    "category": "Business Services",
+    "investment": "low"
+  },
+  {
+    "name": "Online electronics resale",
+    "description": "Buy and resell used electronics or gadgets online, charging a higher price than the purchase cost to make a profit on each sale.",
+    "category": "E-Commerce and Sales",
+    "investment": "medium"
+  },
+  {
+    "name": "Online reputation management",
+    "description": "Generate income by offering online reputation management services to businesses, charging fees for monitoring online reputation, responding to reviews, and implementing strategies to enhance brand perception.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Online subject tutoring (e.g., math, science, language)",
+    "description": "Offer personalized online tutoring sessions to students seeking help in specific subjects, charging an hourly rate or session fees for expertise and support.",
+    "category": "Education and Tutoring",
+    "investment": "high"
+  },
+  {
+    "name": "Online survey and market research services",
+    "description": "Design surveys, conduct data analysis, and provide actionable insights for businesses; charge based on project scope or offer subscription services.",
+    "category": "Miscellaneous",
+    "investment": "high"
+  },
+  {
+    "name": "Online thrift store",
+    "description": "Sell second-hand or thrifted items at a markup, leveraging the appeal of sustainable shopping and unique finds to generate income.",
+    "category": "E-Commerce and Sales",
+    "investment": "high"
+  },
+  {
+    "name": "Online travel planning and itinerary creation",
+    "description": "Curate personalized travel itineraries, charging for customized plans or earning commissions through affiliate partnerships.",
+    "category": "Miscellaneous",
+    "investment": "high"
+  },
+  {
+    "name": "Outdoor gear online store",
+    "description": "Provide outdoor and adventure gear for sale online, catering to outdoor enthusiasts and adventurers to generate income through the sale of gear and equipment.",
+    "category": "E-Commerce and Sales",
+    "investment": "medium"
+  },
+  {
+    "name": "Party styling services",
+    "description": "Provide bespoke party decor and theme styling services for events, charging clients based on the scope of the event, design complexity, and materials used.",
+    "category": "Creative Services",
+    "investment": "high"
+  },
+  {
+    "name": "Personal chef and meal prep",
+    "description": "Prepare customized meals for clients, including meal planning, grocery shopping, and meal preparation, charging for grocery costs, cooking time, and meal packages.",
+    "category": "Home and Lifestyle Services",
+    "investment": "high"
+  },
+  {
+    "name": "Personal shopping and styling",
+    "description": "Offer personalized shopping services and wardrobe styling to help clients curate their wardrobe or find the perfect outfits, charging for shopping time, styling sessions, and styling advice.",
+    "category": "Home and Lifestyle Services",
+    "investment": "high"
+  },
+  {
+    "name": "Personalized gift wrapping services",
+    "description": "Offer personalized gift wrapping services for special occasions, charging clients based on the size and intricacy of the wrapping design.",
+    "category": "Creative Services",
+    "investment": "high"
+  },
+  {
+    "name": "Personalized gifts and keepsake creations",
+    "description": "Create personalized gifts and keepsake items for special occasions, selling them online or through local markets to generate income.",
+    "category": "Creative Services",
+    "investment": "high"
+  },
+  {
+    "name": "Pet products online store",
+    "description": "Provide pet products and accessories for sale online, catering to the pet owners' needs and preferences to generate revenue through product sales.",
+    "category": "E-Commerce and Sales",
+    "investment": "high"
+  },
+  {
+    "name": "Pet sitting and dog walking",
+    "description": "Care for pets while owners are away or provide daily dog walking services, charging per visit, per day, or per walk for pet care services.",
+    "category": "Home and Lifestyle Services",
+    "investment": "high"
+  },
+  {
+    "name": "Photo editing and retouching services",
+    "description": "Provide artistic photo editing and retouching services for photographers or individuals, charging fees per image or project rates.",
+    "category": "Creative Services",
+    "investment": "high"
+  },
+  {
+    "name": "Plant and garden online store",
+    "description": "Offer a selection of plants and garden accessories for sale online, utilizing the growing interest in gardening and houseplants to generate income.",
+    "category": "E-Commerce and Sales",
+    "investment": "high"
+  },
+  {
+    "name": "Podcast editing and production",
+    "description": "Offer professional podcast editing services to enhance audio quality for podcasters; charge per episode or monthly packages.",
+    "category": "Miscellaneous",
+    "investment": "high"
+  },
+  {
+    "name": "Print-on-demand shop",
+    "description": "Create custom-designed products that are only printed or manufactured when ordered, eliminating inventory costs and allowing you to earn a profit on every sale.",
+    "category": "E-Commerce and Sales",
+    "investment": "high"
+  },
+  {
+    "name": "Public speaking coaching",
+    "description": "Assist individuals in improving their public speaking and presentation skills through individual coaching sessions, providing tips, techniques, and feedback to help them communicate effectively, and charging for coaching packages.",
+    "category": "Education and Tutoring",
+    "investment": "medium"
+  },
+  {
+    "name": "Rental property management",
+    "description": "Manage vacation rental properties on platforms like Airbnb, handling guest communication, bookings, and property maintenance, charging a percentage of booking fees or a flat management fee.",
+    "category": "Home and Lifestyle Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Resume writing and editing services",
+    "description": "Craft professional resumes for clients seeking job opportunities, charging a fee per resume or package.",
+    "category": "Miscellaneous",
+    "investment": "high"
+  },
+  {
+    "name": "Search engine optimization (SEO)",
+    "description": "Monetize your expertise in SEO by offering services to improve clients' search engine ranking and visibility, charging fees based on the scope of work, project complexity, and results achieved.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Social media advertising",
+    "description": "Earn revenue through social media advertising services by managing and optimizing clients' social media ad campaigns, charging fees based on ad spend, results achieved, and ongoing management.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Social media management",
+    "description": "By offering social media management services, you can charge clients a monthly fee for creating and implementing engaging social media strategies that help grow their online presence and reach a wider audience.",
+    "category": "Business Services",
+    "investment": "high"
+  },
+  {
+    "name": "Specialty food online store",
+    "description": "Offer gourmet or specialty food items for purchase online, leveraging the exclusivity and quality of the products to attract customers and generate revenue.",
+    "category": "E-Commerce and Sales",
+    "investment": "low"
+  },
+  {
+    "name": "STEM education workshops",
+    "description": "Provide hands-on STEM (Science, Technology, Engineering, Mathematics) workshops for kids, engaging them in interactive learning experiences and charging a fee for workshops or classes.",
+    "category": "Education and Tutoring",
+    "investment": "medium"
+  },
+  {
+    "name": "Study skills coaching",
+    "description": "Offer guidance and strategies to help students improve their study habits, time management skills, and organization techniques, providing personalized coaching sessions for a fee.",
+    "category": "Education and Tutoring",
+    "investment": "medium"
+  },
+  {
+    "name": "Subscription box service",
+    "description": "Offer monthly curated boxes of products to subscribers, charging a subscription fee that covers the cost of the products and shipping while leaving a margin for profit.",
+    "category": "E-Commerce and Sales",
+    "investment": "low"
+  },
+  {
+    "name": "Sustainable products online shop",
+    "description": "Offer eco-friendly and sustainable products for sale, tapping into the growing demand for environmentally conscious products to make a profit on each sale.",
+    "category": "E-Commerce and Sales",
+    "investment": "high"
+  },
+  {
+    "name": "Test prep tutoring (e.g., SAT, ACT, GMAT)",
+    "description": "Provide targeted test preparation assistance for standardized exams, offering personalized study plans and practice sessions to help students improve their test scores, and charge a fee for services.",
+    "category": "Education and Tutoring",
+    "investment": "low"
+  },
+  {
+    "name": "Typography and logo design services",
+    "description": "Provide typography and logo design services for businesses and individuals, charging fees based on project scope, complexity, and usage rights.",
+    "category": "Creative Services",
+    "investment": "low"
+  },
+  {
+    "name": "UX/UI design services",
+    "description": "Earn income through UX/UI design services, charging clients for creating user-friendly and visually appealing designs for digital products, websites, and apps.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Vintage and used online bookstore",
+    "description": "Sell second-hand books or vintage literary treasures online, appealing to book enthusiasts and collectors to generate revenue through book sales.",
+    "category": "E-Commerce and Sales",
+    "investment": "low"
+  },
+  {
+    "name": "Vintage clothing store",
+    "description": "Curate and sell vintage and pre-loved clothing items at a higher price point, leveraging the nostalgia and uniqueness of vintage pieces to make a profit.",
+    "category": "E-Commerce and Sales",
+    "investment": "medium"
+  },
+  {
+    "name": "Virtual assistant services",
+    "description": "Make money by offering virtual assistant services focused on digital tasks, charging clients for tasks such as email management, social media scheduling, website updates, and other digital administrative tasks.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Virtual event hosting and MC services",
+    "description": "Facilitate engaging online events by hosting and serving as the master of ceremonies; monetize through flat fees or hourly rates.",
+    "category": "Miscellaneous",
+    "investment": "medium"
+  },
+  {
+    "name": "Virtual event planning",
+    "description": "Generate income by planning and managing virtual events for companies or organizations, charging fees for event planning, coordination, and execution.",
+    "category": "Business Services",
+    "investment": "medium"
+  },
+  {
+    "name": "Virtual organization sessions",
+    "description": "Assist clients with home organization and decluttering virtually through video consultations, offering personalized tips and strategies for organizing spaces, charging a fee for virtual organizing sessions.",
+    "category": "Home and Lifestyle Services",
+    "investment": "low"
+  },
+  {
+    "name": "Webinar creation and management",
+    "description": "Monetize your expertise by creating and hosting webinars on various topics, charging participants for access, offering sponsorship opportunities, or promoting products and services during the webinar.",
+    "category": "Business Services",
+    "investment": "low"
+  },
+  {
+    "name": "Website development and maintenance",
+    "description": "Generate income by offering website development and maintenance services, charging clients for website design, development, updates, and ongoing maintenance on a project basis or through retainer agreements.",
+    "category": "Business Services",
+    "investment": "low"
+  },
+  {
+    "name": "Wellness products online shop",
+    "description": "Sell a range of wellness and self-care products, leveraging the trend towards self-care and mindfulness to attract customers and earn a profit on each sale.",
+    "category": "E-Commerce and Sales",
+    "investment": "low"
+  },
+  {
+    "name": "Window cleaning and maintenance",
+    "description": "Clean and maintain windows for residential properties, including exterior and interior window cleaning, charging per window or by the job for window cleaning services.",
+    "category": "Home and Lifestyle Services",
+    "investment": "medium"
+  }
+]
