@@ -8,6 +8,8 @@ import ToolsReference from "./components/ToolsReference";
 import VentureProfile from "./components/VentureProfile";
 import WebsiteWizard from "./components/WebsiteWizard";
 import ExportWorkbook from "./components/ExportWorkbook";
+import PersistenceBanner from "./components/PersistenceBanner";
+import BackupActions from "./components/BackupActions";
 import { DAY1_SECTIONS, DAY2_SECTIONS, POST_SECTIONS } from "./data/sections";
 import { usePersistentState } from "./lib/storage";
 import "./App.css";
@@ -68,6 +70,7 @@ export default function App() {
       <HowItWorks />
 
       <div className="container" style={{ paddingTop: "2rem" }}>
+        <PersistenceBanner />
         <VentureProfile profile={profile} onChange={setProfile} />
         <ProgressTracker progress={progress} />
         <ExportWorkbook
@@ -76,6 +79,7 @@ export default function App() {
           website={website}
           sections={ALL_SECTIONS}
         />
+        <BackupActions profile={profile} />
       </div>
 
       <section className="roadmap-day" id="day1">
