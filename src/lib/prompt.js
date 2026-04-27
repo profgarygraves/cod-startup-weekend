@@ -1,6 +1,13 @@
 // Maps the various bracket placeholders used across prompts to fields on
 // the venture profile. Order matters — longer/more-specific patterns first
 // so we don't half-substitute (e.g. "[business name]" before "[business]").
+const VENTURE_TYPE_PHRASE = {
+  service: "service business",
+  product: "physical product",
+  digital: "digital product",
+  combination: "business",
+};
+
 const SUBSTITUTIONS = [
   { pattern: /\[business name\]/gi, field: "ideaName" },
   { pattern: /\[business idea\]/gi, field: "ideaDescription" },
@@ -14,6 +21,7 @@ const SUBSTITUTIONS = [
   { pattern: /\[describe audience\]/gi, field: "audience" },
   { pattern: /\[audience\]/gi, field: "audience" },
   { pattern: /\[core value proposition\]/gi, field: "offer" },
+  { pattern: /\[venture type\]/gi, field: "venturePhrase" },
 ];
 
 function resolveField(profile, field) {
@@ -23,6 +31,9 @@ function resolveField(profile, field) {
     const desc = (profile.description || "").trim();
     if (name && desc) return `${name} — ${desc}`;
     return name || desc || null;
+  }
+  if (field === "venturePhrase") {
+    return VENTURE_TYPE_PHRASE[profile.ventureType] || null;
   }
   const value = profile[field];
   if (typeof value !== "string") return null;

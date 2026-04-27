@@ -1,5 +1,20 @@
 import { useState } from "react";
 
+const VENTURE_TYPES = [
+  { value: "", label: "— Pick one —" },
+  { value: "service", label: "Service business" },
+  { value: "product", label: "Physical product" },
+  { value: "digital", label: "Digital product / app / SaaS" },
+  { value: "combination", label: "Combination of the above" },
+];
+
+const STARTING_POINTS = [
+  { value: "", label: "— Pick one —" },
+  { value: "no-idea", label: "I have no idea yet — help me brainstorm" },
+  { value: "rough-idea", label: "I have a rough idea — help me sharpen it" },
+  { value: "clear-idea", label: "I have a clear idea — help me validate and build" },
+];
+
 const FIELDS = [
   {
     key: "teamName",
@@ -51,12 +66,18 @@ const FIELDS = [
   },
 ];
 
-const REQUIRED_FOR_COMPLETE = ["ideaName", "description", "audience"];
+const REQUIRED_FOR_COMPLETE = ["ventureType", "startingPoint", "ideaName", "description", "audience"];
 
 function isComplete(profile) {
   return REQUIRED_FOR_COMPLETE.every(
     (k) => typeof profile[k] === "string" && profile[k].trim().length > 0
   );
+}
+
+function summaryLine(profile) {
+  const type = VENTURE_TYPES.find((v) => v.value === profile.ventureType)?.label;
+  const start = STARTING_POINTS.find((v) => v.value === profile.startingPoint)?.label;
+  return [type, start].filter(Boolean).join(" · ");
 }
 
 export default function VentureProfile({ profile, onChange }) {
@@ -69,7 +90,11 @@ export default function VentureProfile({ profile, onChange }) {
 
   const handleClear = () => {
     if (!window.confirm("Clear your venture profile? This will erase all the fields.")) return;
-    const empty = Object.fromEntries(FIELDS.map((f) => [f.key, ""]));
+    const empty = {
+      ventureType: "",
+      startingPoint: "",
+      ...Object.fromEntries(FIELDS.map((f) => [f.key, ""])),
+    };
     onChange(empty);
   };
 
@@ -87,7 +112,7 @@ export default function VentureProfile({ profile, onChange }) {
           </h3>
           <p className="venture-profile__sub">
             {complete
-              ? "Your answers auto-fill every AI prompt below. Click to edit."
+              ? summaryLine(profile) || "Click to edit."
               : "Fill this in first — your answers auto-fill every AI prompt below."}
           </p>
         </div>
@@ -96,7 +121,35 @@ export default function VentureProfile({ profile, onChange }) {
 
       {open && (
         <div className="venture-profile__body">
+          <div className="venture-profile__intro">
+            <strong>Tell us where you're starting.</strong>
+            <p>This determines whether we help you brainstorm new ideas or sharpen the one you already have.</p>
+          </div>
           <div className="venture-profile__grid">
+            <label className="venture-profile__field venture-profile__field--full">
+              <span className="venture-profile__label">What are you building?</span>
+              <select
+                className="venture-profile__input"
+                value={profile.ventureType || ""}
+                onChange={handleField("ventureType")}
+              >
+                {VENTURE_TYPES.map((opt) => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+            </label>
+            <label className="venture-profile__field venture-profile__field--full">
+              <span className="venture-profile__label">Where are you starting from?</span>
+              <select
+                className="venture-profile__input"
+                value={profile.startingPoint || ""}
+                onChange={handleField("startingPoint")}
+              >
+                {STARTING_POINTS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+            </label>
             {FIELDS.map((field) => (
               <label key={field.key} className={`venture-profile__field venture-profile__field--${field.type}`}>
                 <span className="venture-profile__label">{field.label}</span>
