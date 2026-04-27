@@ -10,6 +10,19 @@ const STATUS_LABEL = {
   complete: "Complete",
 };
 
+const VENTURE_TYPE_LABEL = {
+  service: "Service business",
+  product: "Physical product",
+  digital: "Digital product / app / SaaS",
+  combination: "Combination",
+};
+
+const STARTING_POINT_LABEL = {
+  "no-idea": "No idea yet — brainstorming",
+  "rough-idea": "Rough idea — sharpening",
+  "clear-idea": "Clear idea — validating and building",
+};
+
 function blank(value) {
   return typeof value === "string" && value.trim() ? value.trim() : "_(blank)_";
 }
@@ -44,6 +57,8 @@ export function buildWorkbook({ profile, statuses, website, sections }) {
 
   lines.push(`## Venture Profile`);
   lines.push("");
+  lines.push(`- **Venture type:** ${VENTURE_TYPE_LABEL[profile.ventureType] || "_(not selected)_"}`);
+  lines.push(`- **Starting point:** ${STARTING_POINT_LABEL[profile.startingPoint] || "_(not selected)_"}`);
   lines.push(`- **Idea name:** ${blank(profile.ideaName)}`);
   lines.push(`- **What it is:** ${blank(profile.description)}`);
   lines.push(`- **Problem we solve:** ${blank(profile.problem)}`);

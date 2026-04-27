@@ -28,6 +28,10 @@ export default function Section({ section, status, onStatusChange, profile, defa
   const whatWereDoing = section.whatWereDoing || section.objective;
   const whyItMatters = section.whyItMatters;
 
+  const startingPoint = profile?.startingPoint;
+  const activePrompts =
+    (startingPoint && section.promptVariants?.[startingPoint]) || section.prompts;
+
   return (
     <div className={`section-card ${open ? "section-card--open" : ""} section-card--status-${status}`}>
       {/* Header */}
@@ -123,7 +127,7 @@ export default function Section({ section, status, onStatusChange, profile, defa
           <div className="section-block section-block--prompts">
             <div className="section-block__label">✍️ Sample Prompts</div>
             <div className="prompt-list">
-              {section.prompts.map((rawPrompt, i) => {
+              {activePrompts.map((rawPrompt, i) => {
                 const filled = fillPrompt(rawPrompt, profile);
                 const hasUnfilled = /\[[^\]]+\]/.test(filled);
                 return (

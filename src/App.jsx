@@ -21,6 +21,8 @@ const INITIAL_STATUSES = Object.fromEntries(
 );
 
 const INITIAL_PROFILE = {
+  ventureType: "",
+  startingPoint: "",
   teamName: "",
   members: "",
   ideaName: "",

@@ -21,10 +21,22 @@ export const DAY1_SECTIONS = [
       { name: "Claude", url: "https://claude.ai", icon: "🧠" },
     ],
     prompts: [
-      "Generate 10 AI-powered business ideas for college students that could reach $1,000/month",
+      "Generate 10 AI-powered [venture type] ideas for college students that could reach $1,000/month",
       "Perform a SWOT analysis for this idea: [insert idea]",
       "Help me refine a clear value proposition for this business",
     ],
+    promptVariants: {
+      "rough-idea": [
+        "I have a rough [venture type] idea: [insert idea]. Ask me 5 sharp clarifying questions to help me sharpen it into something specific. Then suggest 3 ways to narrow the focus.",
+        "Perform a SWOT analysis for this idea: [insert idea]",
+        "Help me refine a clear value proposition for this business",
+      ],
+      "clear-idea": [
+        "I already have a clear [venture type] idea: [insert idea]. Pressure-test it like a skeptical investor — what are the 3 biggest risks, and what would I have to prove this weekend to de-risk them?",
+        "Perform a SWOT analysis for this idea: [insert idea]",
+        "Help me refine a clear, punchy value proposition for [business name]: [insert idea]. Give me 3 versions in different tones.",
+      ],
+    },
     deliverables: [
       "Final selected idea",
       "Defined problem + solution statement",
