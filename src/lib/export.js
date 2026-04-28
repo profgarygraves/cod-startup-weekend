@@ -93,7 +93,12 @@ export function buildWorkbook({ profile, statuses, website, sections }) {
     if (s.whyItMatters) lines.push(`- **Why it matters:** ${s.whyItMatters}`);
     lines.push("");
     lines.push(`**Tasks**`);
-    s.tasks.forEach((t) => lines.push(`- [${status === "complete" ? "x" : " "}] ${t}`));
+    const taskLabels = (s.taskPrompts || []).map((tp) => tp.task);
+    if (taskLabels.length === 0 && Array.isArray(s.tasks)) {
+      s.tasks.forEach((t) => lines.push(`- [${status === "complete" ? "x" : " "}] ${t}`));
+    } else {
+      taskLabels.forEach((t) => lines.push(`- [${status === "complete" ? "x" : " "}] ${t}`));
+    }
     lines.push("");
     lines.push(`**Deliverables**`);
     s.deliverables.forEach((d) => lines.push(`- ${d}`));
