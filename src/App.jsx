@@ -11,6 +11,7 @@ import ExportWorkbook from "./components/ExportWorkbook";
 import PersistenceBanner from "./components/PersistenceBanner";
 import BackupActions from "./components/BackupActions";
 import IdeaBrowser from "./components/IdeaBrowser";
+import RefreshPromptsButton from "./components/RefreshPromptsButton";
 import { DAY1_SECTIONS, DAY2_SECTIONS, POST_SECTIONS } from "./data/sections";
 import { usePersistentState } from "./lib/storage";
 import "./App.css";
@@ -24,6 +25,8 @@ const INITIAL_STATUSES = Object.fromEntries(
 const INITIAL_PROFILE = {
   ventureType: "",
   startingPoint: "",
+  marketAreaScope: "",
+  marketArea: "",
   teamName: "",
   members: "",
   ideaName: "",
@@ -75,6 +78,12 @@ export default function App() {
       <div className="container" style={{ paddingTop: "2rem" }}>
         <PersistenceBanner />
         <VentureProfile profile={profile} onChange={setProfile} />
+        <div className="auto-fill-bar">
+          <span className="auto-fill-bar__note">
+            ✨ Every prompt below auto-fills from your profile. Edit the profile and prompts update instantly.
+          </span>
+          <RefreshPromptsButton />
+        </div>
         <IdeaBrowser
           profile={profile}
           onAdoptIdea={(patch) => setProfile({ ...profile, ...patch })}

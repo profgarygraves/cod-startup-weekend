@@ -70,16 +70,17 @@ export const DAY1_SECTIONS = [
     id: "market-research",
     day: 1,
     number: 2,
-    collapsed_label: "🎯 Understand Your Customer Deeply",
-    title: "Target Market & Customer Research",
-    whatWereDoing: "Defining exactly who your first customer is, why they'd buy, and who else is competing for them.",
+    collapsed_label: "🎯 Understand Your Industry, Market & Customer",
+    title: "Industry, Market & Customer Research",
+    whatWereDoing: "Mapping the industry you're entering, sizing up real and adjacent competitors in your market area, then going deep on the one customer you're for.",
     whyItMatters:
-      "We do this immediately after picking the idea — before pricing or building anything — because every decision downstream is shaped by who you're really for. The startups that win pick one specific person and go deep.",
+      "We do this immediately after picking the idea — before pricing or building anything — because every decision downstream is shaped by your market and your customer. Industry first, customer second: you can't describe your customer well until you know who else is selling to them.",
     suggestedTime: "~Sat 10:30am–12:00pm",
     deliverables: [
+      "Industry landscape report (size, trends, regulations, demand signals)",
+      "Competitor scan (direct + adjacent if direct competitors are scarce)",
       "2–3 written customer personas",
       "Completed Customer Empathy Map for primary persona",
-      "Three Circles competitor analysis",
       "List of 10 real potential first customers",
     ],
     tools: [
@@ -88,6 +89,18 @@ export const DAY1_SECTIONS = [
     ],
     tips: "The best startups are built for ONE specific person, not everyone. Pick your primary customer and go deep before generalizing.",
     taskPrompts: [
+      {
+        task: "Pull an industry landscape report for your market area",
+        prompts: [
+          "Build an industry landscape report for [insert idea] in [market area]. Cover: (1) approximate market size (revenue and customer counts, with sources you'd check); (2) 3–5 key trends shaping this industry today; (3) regulatory or licensing considerations to be aware of; (4) demand signals (search volume, social interest, news coverage); (5) typical pricing benchmarks. Where you're uncertain, say 'I don't know — verify by checking X.' Format as a clean report with headings.",
+        ],
+      },
+      {
+        task: "Run a competitive scan in your market area",
+        prompts: [
+          "Find direct competitors for [insert idea] serving [market area]. Give me a table with name, what they offer, pricing (if known), and one weakness. If there are FEWER than 3 direct competitors in the area, also list: (a) the closest adjacent competitors (different product/service that solves the same job), and (b) what customers do today INSTEAD — including DIY, free, or cobbled-together alternatives. End with the one specific gap I could exploit.",
+        ],
+      },
       {
         task: "Build a Customer Empathy Map for your primary customer",
         prompts: [

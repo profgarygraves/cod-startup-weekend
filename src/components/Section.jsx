@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fillPrompt, chatGPTUrl, claudeUrl } from "../lib/prompt";
+import { fillPrompt, fillPromptSegments, chatGPTUrl, claudeUrl } from "../lib/prompt";
 
 const STATUS_OPTIONS = ["not-started", "in-progress", "complete"];
 const STATUS_LABELS = {
@@ -122,11 +122,18 @@ export default function Section({ section, status, onStatusChange, profile, defa
                         <div className="task-prompt__prompts">
                           {prompts.map((rawPrompt, pi) => {
                             const filled = fillPrompt(rawPrompt, profile);
+                            const segments = fillPromptSegments(rawPrompt, profile);
                             const hasUnfilled = /\[[^\]]+\]/.test(filled);
                             const key = `${ti}-${pi}`;
                             return (
                               <div key={pi} className="prompt-item">
-                                <p className="prompt-item__text">"{filled}"</p>
+                                <p className="prompt-item__text">
+                                  "{segments.map((seg, si) => seg.filled ? (
+                                    <mark key={si} className="prompt-fill">{seg.text}</mark>
+                                  ) : (
+                                    <span key={si}>{seg.text}</span>
+                                  ))}"
+                                </p>
                                 {hasUnfilled && (
                                   <p className="prompt-item__hint">
                                     ⚠️ Replace [bracketed text] before sending — or fill in your Venture Profile up top to auto-fill it.
