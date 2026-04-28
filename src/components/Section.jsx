@@ -8,13 +8,25 @@ const STATUS_LABELS = {
   complete: "✅ Complete",
 };
 
+function resolveTaskPrompts(taskBlock, profile) {
+  if (taskBlock.byStartingPoint && profile?.startingPoint) {
+    const variant = taskBlock.byStartingPoint[profile.startingPoint];
+    if (variant) return variant;
+  }
+  if (taskBlock.byVentureType && profile?.ventureType) {
+    const variant = taskBlock.byVentureType[profile.ventureType];
+    if (variant) return variant;
+  }
+  return taskBlock.prompts || [];
+}
+
 export default function Section({ section, status, onStatusChange, profile, defaultOpen, extra }) {
   const [open, setOpen] = useState(defaultOpen || false);
   const [copied, setCopied] = useState(null);
 
-  const copyPrompt = (prompt, idx) => {
+  const copyPrompt = (prompt, key) => {
     navigator.clipboard.writeText(prompt).then(() => {
-      setCopied(idx);
+      setCopied(key);
       setTimeout(() => setCopied(null), 2000);
     });
   };
@@ -27,10 +39,7 @@ export default function Section({ section, status, onStatusChange, profile, defa
 
   const whatWereDoing = section.whatWereDoing || section.objective;
   const whyItMatters = section.whyItMatters;
-
-  const startingPoint = profile?.startingPoint;
-  const activePrompts =
-    (startingPoint && section.promptVariants?.[startingPoint]) || section.prompts;
+  const taskPrompts = section.taskPrompts || [];
 
   return (
     <div className={`section-card ${open ? "section-card--open" : ""} section-card--status-${status}`}>
@@ -76,34 +85,7 @@ export default function Section({ section, status, onStatusChange, profile, defa
             )}
           </div>
 
-          <div className="section-grid">
-            {/* Tasks */}
-            <div className="section-block section-block--tasks">
-              <div className="section-block__label">✅ Tasks to Complete</div>
-              <ul className="task-list">
-                {section.tasks.map((task, i) => (
-                  <li key={i} className="task-item">
-                    <span className="task-item__check">☐</span>
-                    {task}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Deliverables */}
-            <div className="section-block section-block--deliverables">
-              <div className="section-block__label">📦 Deliverables</div>
-              <ul className="deliverable-list">
-                {section.deliverables.map((d, i) => (
-                  <li key={i}>
-                    <span>→</span> {d}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Tools */}
+          {/* AI Tools */}
           <div className="section-block">
             <div className="section-block__label">🧠 AI Tools to Use</div>
             <div className="tool-cards">
@@ -123,50 +105,82 @@ export default function Section({ section, status, onStatusChange, profile, defa
             </div>
           </div>
 
-          {/* Prompts */}
-          <div className="section-block section-block--prompts">
-            <div className="section-block__label">✍️ Sample Prompts</div>
-            <div className="prompt-list">
-              {activePrompts.map((rawPrompt, i) => {
-                const filled = fillPrompt(rawPrompt, profile);
-                const hasUnfilled = /\[[^\]]+\]/.test(filled);
-                return (
-                  <div key={i} className="prompt-item">
-                    <p className="prompt-item__text">"{filled}"</p>
-                    {hasUnfilled && (
-                      <p className="prompt-item__hint">
-                        ⚠️ Replace the [bracketed text] before sending — or fill in your Venture Profile at the top to auto-fill it.
-                      </p>
-                    )}
-                    <div className="prompt-item__actions">
-                      <button
-                        className={`copy-btn ${copied === i ? "copy-btn--copied" : ""}`}
-                        onClick={() => copyPrompt(filled, i)}
-                      >
-                        {copied === i ? "✓ Copied!" : "📋 Copy"}
-                      </button>
-                      <a
-                        className="open-ai-btn open-ai-btn--chatgpt"
-                        href={chatGPTUrl(filled)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Open in ChatGPT ↗
-                      </a>
-                      <a
-                        className="open-ai-btn open-ai-btn--claude"
-                        href={claudeUrl(filled)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Open in Claude ↗
-                      </a>
-                    </div>
-                  </div>
-                );
-              })}
+          {/* Tasks with embedded prompts */}
+          {taskPrompts.length > 0 && (
+            <div className="section-block section-block--tasks">
+              <div className="section-block__label">✅ Tasks (with AI prompts to help)</div>
+              <ol className="task-prompt-list">
+                {taskPrompts.map((tp, ti) => {
+                  const prompts = resolveTaskPrompts(tp, profile);
+                  return (
+                    <li key={ti} className="task-prompt">
+                      <div className="task-prompt__header">
+                        <span className="task-prompt__num">{ti + 1}</span>
+                        <span className="task-prompt__label">{tp.task}</span>
+                      </div>
+                      {prompts.length > 0 && (
+                        <div className="task-prompt__prompts">
+                          {prompts.map((rawPrompt, pi) => {
+                            const filled = fillPrompt(rawPrompt, profile);
+                            const hasUnfilled = /\[[^\]]+\]/.test(filled);
+                            const key = `${ti}-${pi}`;
+                            return (
+                              <div key={pi} className="prompt-item">
+                                <p className="prompt-item__text">"{filled}"</p>
+                                {hasUnfilled && (
+                                  <p className="prompt-item__hint">
+                                    ⚠️ Replace [bracketed text] before sending — or fill in your Venture Profile up top to auto-fill it.
+                                  </p>
+                                )}
+                                <div className="prompt-item__actions">
+                                  <button
+                                    className={`copy-btn ${copied === key ? "copy-btn--copied" : ""}`}
+                                    onClick={() => copyPrompt(filled, key)}
+                                  >
+                                    {copied === key ? "✓ Copied!" : "📋 Copy"}
+                                  </button>
+                                  <a
+                                    className="open-ai-btn open-ai-btn--chatgpt"
+                                    href={chatGPTUrl(filled)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    Open in ChatGPT ↗
+                                  </a>
+                                  <a
+                                    className="open-ai-btn open-ai-btn--claude"
+                                    href={claudeUrl(filled)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    Open in Claude ↗
+                                  </a>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
-          </div>
+          )}
+
+          {/* Deliverables */}
+          {section.deliverables?.length > 0 && (
+            <div className="section-block section-block--deliverables">
+              <div className="section-block__label">📦 Deliverables (what you should have when done)</div>
+              <ul className="deliverable-list">
+                {section.deliverables.map((d, i) => (
+                  <li key={i}>
+                    <span>→</span> {d}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Section-specific extra (e.g. Website Wizard) */}
           {extra}
