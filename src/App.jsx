@@ -12,6 +12,7 @@ import PersistenceBanner from "./components/PersistenceBanner";
 import BackupActions from "./components/BackupActions";
 import IdeaBrowser from "./components/IdeaBrowser";
 import RefreshPromptsButton from "./components/RefreshPromptsButton";
+import PlayLabSetup from "./components/PlayLabSetup";
 import { DAY1_SECTIONS, DAY2_SECTIONS, POST_SECTIONS } from "./data/sections";
 import { usePersistentState } from "./lib/storage";
 import "./App.css";
@@ -161,6 +162,8 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      <PlayLabSetup profile={profile} />
 
       <ToolsReference />
 
