@@ -75,6 +75,10 @@ export default function App() {
       <div className="container" style={{ paddingTop: "2rem" }}>
         <PersistenceBanner />
         <VentureProfile profile={profile} onChange={setProfile} />
+        <IdeaBrowser
+          profile={profile}
+          onAdoptIdea={(patch) => setProfile({ ...profile, ...patch })}
+        />
         <ProgressTracker progress={progress} />
         <ExportWorkbook
           profile={profile}
@@ -100,14 +104,6 @@ export default function App() {
                 status={statuses[s.id]}
                 onStatusChange={handleStatusChange}
                 profile={profile}
-                extra={
-                  s.id === "brainstorming" ? (
-                    <IdeaBrowser
-                      profile={profile}
-                      onAdoptIdea={(patch) => setProfile({ ...profile, ...patch })}
-                    />
-                  ) : null
-                }
               />
             ))}
           </div>
