@@ -14,6 +14,7 @@ const ALL_TOOLS = [
   { name: "Claude", url: "https://claude.ai", icon: "🧠", category: "AI Writing & Strategy", desc: "Deep analysis, pitch feedback, long-form writing, Projects feature. Strong free tier.", price: "freemium" },
   { name: "Microsoft Copilot", url: "https://copilot.microsoft.com", icon: "🟦", category: "AI Writing & Strategy", desc: "Free GPT-4 access via Microsoft account. Good fallback when ChatGPT free tier maxes out.", price: "free" },
   { name: "Google Gemini", url: "https://gemini.google.com", icon: "💎", category: "AI Writing & Strategy", desc: "Strong reasoning + integration with Google Drive/Docs. Free tier capable.", price: "freemium" },
+  { name: "NotebookLM", url: "https://notebooklm.google.com", icon: "📓", category: "AI Writing & Strategy", desc: "Source-grounded research. Upload PDFs, web pages, YouTube videos — get briefing docs, FAQs, and audio overviews cited back to your sources. Best for industry research.", price: "free" },
 
   // Design & Branding
   { name: "Canva AI", url: "https://canva.com", icon: "🎨", category: "Design & Branding", desc: "Logos, social graphics, presentations, brand kits, AI Magic features. Generous free tier.", price: "freemium" },

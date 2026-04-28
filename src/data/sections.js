@@ -86,6 +86,7 @@ export const DAY1_SECTIONS = [
     tools: [
       { name: "ChatGPT", url: "https://chat.openai.com", icon: "🤖" },
       { name: "Claude", url: "https://claude.ai", icon: "🧠" },
+      { name: "NotebookLM", url: "https://notebooklm.google.com", icon: "📓" },
     ],
     tips: "The best startups are built for ONE specific person, not everyone. Pick your primary customer and go deep before generalizing.",
     taskPrompts: [
@@ -93,6 +94,7 @@ export const DAY1_SECTIONS = [
         task: "Pull an industry landscape report for your market area",
         prompts: [
           "Build an industry landscape report for [insert idea] in [market area]. Cover: (1) approximate market size (revenue and customer counts, with sources you'd check); (2) 3–5 key trends shaping this industry today; (3) regulatory or licensing considerations to be aware of; (4) demand signals (search volume, social interest, news coverage); (5) typical pricing benchmarks. Where you're uncertain, say 'I don't know — verify by checking X.' Format as a clean report with headings.",
+          "Source-grounded version (paste into NotebookLM at notebooklm.google.com — free with a Google account). FIRST: gather 5–10 real sources about your industry (competitor websites, news articles, Reddit threads, YouTube interviews, government reports, trade-association pages) and add them as Sources in a new NotebookLM notebook. THEN ask: \"I'm launching [insert idea] in [market area]. Using ONLY the sources I've added, build a briefing doc covering (1) the current state of this industry, (2) the top 3 trends shaping it, (3) the 3 biggest opportunities a small new entrant could exploit, (4) the 3 biggest risks or barriers to entry, (5) any specific players I should know. Cite which source each claim comes from. End with the most important question that's NOT answered by these sources and how I'd find it.\" After you get the briefing, click 'Audio Overview' to generate a 10-minute podcast you can listen to while you work.",
         ],
       },
       {
