@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function StickyNav() {
   const [visible, setVisible] = useState(false);
@@ -50,6 +51,7 @@ export default function StickyNav() {
               {item.label}
             </button>
           ))}
+          <ThemeToggle />
         </div>
       </div>
     </nav>
