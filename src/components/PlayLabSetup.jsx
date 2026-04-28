@@ -39,8 +39,12 @@ export default function PlayLabSetup({ profile }) {
                 <div className="playlab-step">
                   <span className="playlab-step__num">1</span>
                   <div>
-                    <strong>Open PlayLab.ai</strong>
-                    <p>Sign in (free for educators and students), then click "Create New Project."</p>
+                    <strong>Join the COD PlayLab.ai org (one-time)</strong>
+                    <p>
+                      Use the invitation link below to set up your free account inside the
+                      College of the Desert organization. Once you're in, you'll click "Create
+                      New Project."
+                    </p>
                   </div>
                 </div>
                 <div className="playlab-step">
@@ -77,11 +81,11 @@ export default function PlayLabSetup({ profile }) {
                     </button>
                     <a
                       className="open-ai-btn open-ai-btn--chatgpt"
-                      href="https://www.playlab.ai"
+                      href="https://www.playlab.ai/invitation/COD-GGQGPN"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      🚀 Open PlayLab.ai ↗
+                      🚀 Open PlayLab.ai (COD invite) ↗
                     </a>
                   </div>
                 </div>
