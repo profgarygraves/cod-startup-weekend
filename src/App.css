@@ -1572,6 +1572,155 @@ mark.prompt-fill {
 }
 
 /* ============================================
+   TOOLS REFERENCE — featured cards + price pills
+   ============================================ */
+.tools-featured {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+@media (max-width: 768px) {
+  .tools-featured { grid-template-columns: 1fr; }
+}
+.tools-featured__pack,
+.tools-featured__paid {
+  padding: 1.5rem 1.625rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+.tools-featured__pack {
+  background: linear-gradient(135deg, rgba(124,58,237,0.10), rgba(37,99,235,0.07));
+  border-color: rgba(124,58,237,0.4);
+}
+.tools-featured__paid {
+  background: linear-gradient(135deg, rgba(253,184,39,0.10), rgba(200,16,46,0.06));
+  border-color: rgba(253,184,39,0.4);
+}
+.tools-featured__badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(124,58,237,0.20);
+  color: var(--purple-light);
+  margin-bottom: 0.75rem;
+}
+.tools-featured__badge--paid {
+  background: rgba(253,184,39,0.20);
+  color: var(--blue-light);
+}
+.tools-featured__title {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem;
+  color: var(--text-bright);
+}
+.tools-featured__sub {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+.tools-featured__sub code {
+  background: var(--tint-medium);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.tools-featured__list,
+.tools-featured__paid-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.tools-featured__paid-list { list-style: decimal; padding-left: 1.25rem; }
+.tools-featured__list li,
+.tools-featured__paid-list li {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+.tools-featured__list li strong,
+.tools-featured__paid-list li strong {
+  color: var(--text-bright);
+}
+.tools-featured__cta {
+  display: inline-block;
+  background: var(--purple);
+  color: #fff;
+  padding: 0.625rem 1.125rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 0 16px rgba(200,16,46,0.4);
+}
+.tools-featured__cta:hover {
+  transform: translateY(-1px);
+  background: #a50d25;
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 0 24px rgba(200,16,46,0.55);
+}
+.tools-featured__paid-tip {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  background: var(--tint-soft);
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Price pill on each tool card */
+.tool-reference-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.tool-price {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.tool-price--free {
+  background: rgba(5,150,105,0.18);
+  color: var(--green-light);
+}
+.tool-price--free-tier,
+.tool-price--freemium {
+  background: rgba(37,99,235,0.18);
+  color: var(--blue-light);
+}
+.tool-price--free-students {
+  background: rgba(124,58,237,0.20);
+  color: var(--purple-light);
+}
+.tool-price--paid,
+.tool-price--pay-per-use {
+  background: var(--tint-medium);
+  color: var(--text-muted);
+}
+[data-theme="light"] .tool-price--free { background: rgba(5,150,105,0.16); color: #047857; }
+[data-theme="light"] .tool-price--free-tier,
+[data-theme="light"] .tool-price--freemium { background: rgba(184,134,11,0.18); color: #8a6500; }
+[data-theme="light"] .tool-price--free-students { background: rgba(124,58,237,0.18); color: #6d28d9; }
+
+/* ============================================
    PLAYLAB SETUP (post-cohort takeaway)
    ============================================ */
 .playlab-section {
