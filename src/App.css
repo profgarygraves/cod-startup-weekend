@@ -1572,6 +1572,146 @@ mark.prompt-fill {
 }
 
 /* ============================================
+   PLAYLAB SETUP (post-cohort takeaway)
+   ============================================ */
+.playlab-section {
+  padding: 4rem 0 2rem;
+  background: linear-gradient(180deg, transparent, rgba(124,58,237,0.04), transparent);
+  border-top: 1px solid var(--border);
+}
+.playlab-card {
+  background: linear-gradient(135deg, rgba(124,58,237,0.10), rgba(37,99,235,0.06));
+  border: 1px solid rgba(124,58,237,0.4);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.playlab-card__header {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  gap: 1rem;
+}
+.playlab-card__header:hover { background: var(--tint-soft); }
+.playlab-card__header-left { flex: 1; min-width: 0; }
+.playlab-card__badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.875rem;
+  border-radius: 999px;
+  background: rgba(124,58,237,0.20);
+  color: var(--purple-light);
+  margin-bottom: 0.625rem;
+}
+.playlab-card__title {
+  font-size: 1.4rem;
+  margin: 0 0 0.4rem;
+  color: var(--text-bright);
+  line-height: 1.25;
+}
+.playlab-card__sub {
+  font-size: 0.92rem;
+  color: var(--text);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 720px;
+}
+.playlab-card__body {
+  padding: 0 1.75rem 1.75rem;
+  border-top: 1px solid var(--border);
+}
+.playlab-card__steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.875rem;
+  margin: 1.5rem 0 1.75rem;
+}
+.playlab-step {
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+  padding: 0.875rem 1rem;
+  background: var(--tint-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.playlab-step__num {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(124,58,237,0.2);
+  color: var(--purple-light);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid rgba(124,58,237,0.4);
+}
+.playlab-step strong {
+  color: var(--text-bright);
+  font-size: 0.95rem;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.playlab-step p {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0;
+}
+.playlab-card__output {
+  background: var(--tint-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.125rem;
+}
+.playlab-card__output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.875rem;
+  flex-wrap: wrap;
+}
+.playlab-card__output-header strong {
+  color: var(--text-bright);
+  font-size: 0.92rem;
+}
+.playlab-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.playlab-card__pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.125rem;
+  font-size: 0.78rem;
+  font-family: 'SF Mono', ui-monospace, Menlo, Monaco, monospace;
+  color: var(--text-bright);
+  white-space: pre-wrap;
+  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 0;
+  line-height: 1.55;
+}
+.playlab-card__hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0.75rem 0 0;
+  line-height: 1.5;
+}
+.playlab-card__hint strong { color: var(--text); }
+
+/* ============================================
    LIGHT THEME — surface-specific overrides
    for things that don't theme cleanly via tokens
    ============================================ */
