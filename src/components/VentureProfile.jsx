@@ -15,6 +15,17 @@ const STARTING_POINTS = [
   { value: "clear-idea", label: "I have a clear idea — help me validate and build" },
 ];
 
+const MARKET_AREA_SCOPES = [
+  { value: "", label: "— Pick one —" },
+  { value: "online", label: "Online-only / global (anyone with internet)" },
+  { value: "hyperlocal", label: "Hyperlocal (single neighborhood or campus)" },
+  { value: "city", label: "City / town" },
+  { value: "regional", label: "Regional (county or metro area)" },
+  { value: "state", label: "Statewide" },
+  { value: "national", label: "National" },
+  { value: "international", label: "International" },
+];
+
 const FIELDS = [
   {
     key: "teamName",
@@ -77,7 +88,8 @@ function isComplete(profile) {
 function summaryLine(profile) {
   const type = VENTURE_TYPES.find((v) => v.value === profile.ventureType)?.label;
   const start = STARTING_POINTS.find((v) => v.value === profile.startingPoint)?.label;
-  return [type, start].filter(Boolean).join(" · ");
+  const area = profile.marketArea?.trim();
+  return [type, start, area].filter(Boolean).join(" · ");
 }
 
 export default function VentureProfile({ profile, onChange }) {
@@ -93,6 +105,8 @@ export default function VentureProfile({ profile, onChange }) {
     const empty = {
       ventureType: "",
       startingPoint: "",
+      marketAreaScope: "",
+      marketArea: "",
       ...Object.fromEntries(FIELDS.map((f) => [f.key, ""])),
     };
     onChange(empty);
@@ -149,6 +163,28 @@ export default function VentureProfile({ profile, onChange }) {
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
               </select>
+            </label>
+            <label className="venture-profile__field">
+              <span className="venture-profile__label">Market area — scope</span>
+              <select
+                className="venture-profile__input"
+                value={profile.marketAreaScope || ""}
+                onChange={handleField("marketAreaScope")}
+              >
+                {MARKET_AREA_SCOPES.map((opt) => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+            </label>
+            <label className="venture-profile__field">
+              <span className="venture-profile__label">Market area — specific location</span>
+              <input
+                className="venture-profile__input"
+                type="text"
+                value={profile.marketArea || ""}
+                onChange={handleField("marketArea")}
+                placeholder="e.g. Palm Desert CA, 92211 ZIP, Riverside County, or 'United States'"
+              />
             </label>
             {FIELDS.map((field) => (
               <label key={field.key} className={`venture-profile__field venture-profile__field--${field.type}`}>

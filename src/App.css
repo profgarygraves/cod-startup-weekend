@@ -1463,6 +1463,50 @@
 }
 
 /* ============================================
+   AUTO-FILL BAR + REFRESH PROMPTS BUTTON
+   ============================================ */
+.auto-fill-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.875rem;
+  padding: 0.625rem 1rem;
+  background: var(--tint-soft);
+  border: 1px dashed var(--border-light);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.auto-fill-bar__note {
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.4;
+  flex: 1;
+  min-width: 200px;
+}
+.refresh-prompts-btn {
+  background: rgba(124,58,237,0.18);
+  color: var(--purple-light);
+  border: 1px solid rgba(124,58,237,0.4);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.4rem 0.875rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.refresh-prompts-btn:hover {
+  background: rgba(124,58,237,0.3);
+  transform: translateY(-1px);
+}
+.refresh-prompts-btn--flashing {
+  background: rgba(5,150,105,0.18);
+  color: var(--green-light);
+  border-color: rgba(5,150,105,0.4);
+}
+
+/* ============================================
    TASK + PROMPTS LIST (Section body)
    ============================================ */
 .task-prompt-list {
@@ -1511,6 +1555,17 @@
   flex-direction: column;
   gap: 0.5rem;
   padding-left: 38px;
+}
+mark.prompt-fill {
+  background: rgba(253,184,39,0.20);
+  color: var(--text-bright);
+  padding: 0 3px;
+  border-radius: 3px;
+  font-style: normal;
+}
+[data-theme="light"] mark.prompt-fill {
+  background: rgba(253,184,39,0.32);
+  color: #6b4a00;
 }
 @media (max-width: 640px) {
   .task-prompt__prompts { padding-left: 0; }

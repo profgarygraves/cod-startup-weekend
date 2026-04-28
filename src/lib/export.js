@@ -23,6 +23,16 @@ const STARTING_POINT_LABEL = {
   "clear-idea": "Clear idea — validating and building",
 };
 
+const MARKET_AREA_SCOPE_LABEL = {
+  online: "Online-only / global",
+  hyperlocal: "Hyperlocal (single neighborhood or campus)",
+  city: "City / town",
+  regional: "Regional (county or metro area)",
+  state: "Statewide",
+  national: "National",
+  international: "International",
+};
+
 function blank(value) {
   return typeof value === "string" && value.trim() ? value.trim() : "_(blank)_";
 }
@@ -59,6 +69,12 @@ export function buildWorkbook({ profile, statuses, website, sections }) {
   lines.push("");
   lines.push(`- **Venture type:** ${VENTURE_TYPE_LABEL[profile.ventureType] || "_(not selected)_"}`);
   lines.push(`- **Starting point:** ${STARTING_POINT_LABEL[profile.startingPoint] || "_(not selected)_"}`);
+  const scopeLabel = MARKET_AREA_SCOPE_LABEL[profile.marketAreaScope];
+  const areaText = (profile.marketArea || "").trim();
+  const marketAreaLine = scopeLabel && areaText
+    ? `${areaText} — ${scopeLabel}`
+    : areaText || scopeLabel || "_(not selected)_";
+  lines.push(`- **Market area:** ${marketAreaLine}`);
   lines.push(`- **Idea name:** ${blank(profile.ideaName)}`);
   lines.push(`- **What it is:** ${blank(profile.description)}`);
   lines.push(`- **Problem we solve:** ${blank(profile.problem)}`);
