@@ -32,6 +32,7 @@ const ALL_TOOLS = [
   { name: "Replit", url: "https://replit.com", icon: "🟧", category: "Prototyping & Building", desc: "Browser-based coding with AI assistant.", price: "freemium" },
 
   // Website Hosting (free options first)
+  { name: "31is.com (COD)", url: "https://31is.com", icon: "🚀", category: "Website Hosting", desc: "The COD-built site builder — sign up, pick a subdomain like yourname.31is.com, paste your HTML or pick a template, and you're live in minutes with a built-in lead-capture form. Best for the weekend if you just want to TEST.", price: "free-students" },
   { name: "GitHub Pages", url: "https://pages.github.com", icon: "🐙", category: "Website Hosting", desc: "Free static-site hosting with custom domain support and free HTTPS. Pairs with GitHub Student Pack.", price: "free" },
   { name: "Cloudflare Pages", url: "https://pages.cloudflare.com", icon: "🟧", category: "Website Hosting", desc: "Generous free tier with the easiest custom-domain setup of any host.", price: "free" },
   { name: "Carrd", url: "https://carrd.co", icon: "🪪", category: "Website Hosting", desc: "Beautiful single-page sites. Free with Carrd subdomain, $19/yr Pro for custom domain.", price: "freemium" },

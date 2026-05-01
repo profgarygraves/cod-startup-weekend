@@ -74,6 +74,189 @@ function buildSpec(profile, values) {
   return lines.join("\n");
 }
 
+function escapeHtml(s) {
+  return String(s || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function buildHTML(profile, values) {
+  const headline = escapeHtml(values.headline);
+  const subheadline = escapeHtml(values.subheadline);
+  const ctaText = escapeHtml(values.ctaText);
+  const offerHeadline = escapeHtml(values.offerHeadline);
+  const founderName = escapeHtml(values.founderName);
+  const founderBio = escapeHtml(values.founderBio || `I'm building ${values.headline} because I believe it should exist. I'd love your feedback.`);
+  const price = escapeHtml(profile?.price || "");
+  const audience = escapeHtml(profile?.audience || "");
+
+  const bullets = (values.offerBullets || "")
+    .split("\n")
+    .map((b) => b.replace(/^[•\-]\s*/, "").trim())
+    .filter(Boolean);
+  const bulletHTML = bullets.length
+    ? bullets.map((b) => `      <li>${escapeHtml(b)}</li>`).join("\n")
+    : `      <li>(add 3 benefits)</li>`;
+
+  const formIntro = values.formType === "reservation"
+    ? "Reserve your spot — first come, first served."
+    : values.formType === "message"
+    ? "Have a question? Drop it below."
+    : "Get on the early-access list — no spam, just launch updates.";
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${headline}</title>
+<meta name="description" content="${subheadline}">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --accent: #c8102e;
+    --bg: #fdfcfa;
+    --card: #ffffff;
+    --border: #e8e2dc;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+  section { margin-bottom: 4rem; }
+  h1 { font-size: clamp(2rem, 6vw, 3.25rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -0.02em; }
+  h2 { font-size: 1.5rem; margin: 0 0 1rem; }
+  p { margin: 0 0 1rem; color: var(--muted); }
+  .lead { font-size: 1.2rem; color: var(--ink); }
+  .cta {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.875rem 1.75rem;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .cta:hover { transform: translateY(-1px); opacity: 0.95; }
+  ul.benefits { padding: 0; list-style: none; }
+  ul.benefits li {
+    padding: 0.625rem 0 0.625rem 1.5rem;
+    position: relative;
+    color: var(--ink);
+    border-bottom: 1px solid var(--border);
+  }
+  ul.benefits li:last-child { border-bottom: none; }
+  ul.benefits li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .price-tag {
+    display: inline-block;
+    background: #fff5e6;
+    color: #8a4a00;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .founder { background: var(--card); border: 1px solid var(--border); padding: 1.5rem 1.625rem; border-radius: 12px; }
+  .founder strong { color: var(--ink); }
+  form {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  form label { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
+  form input, form textarea {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.625rem 0.875rem;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  form input:focus, form textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  form button {
+    background: var(--accent);
+    color: #fff;
+    border: 0;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  footer { color: var(--muted); font-size: 0.85rem; text-align: center; padding-top: 2rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<main>
+
+  <section class="hero">
+    <h1>${headline}</h1>
+    <p class="lead">${subheadline}</p>
+    <a href="#signup" class="cta">${ctaText}</a>
+  </section>
+
+  <section class="offer">
+    <h2>${offerHeadline}</h2>
+    ${price ? `<span class="price-tag">${price}</span>` : ""}
+    <ul class="benefits">
+${bulletHTML}
+    </ul>
+  </section>
+
+  <section class="founder-section">
+    <h2>About the founder</h2>
+    <div class="founder">
+      <p><strong>${founderName}</strong></p>
+      <p>${founderBio}</p>
+    </div>
+  </section>
+
+  <section id="signup">
+    <h2>${ctaText}</h2>
+    <p>${formIntro}</p>
+    <form method="post" action="">
+      <label for="email">Email address</label>
+      <input id="email" type="email" name="email" placeholder="you@example.com" required>
+      ${values.formType === "message" ? `
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="3" placeholder="What's your question?"></textarea>` : ""}
+      <button type="submit">${ctaText}</button>
+    </form>
+  </section>
+
+  <footer>
+    ${audience ? `<p>Built for ${audience}.</p>` : ""}
+    <p>© ${new Date().getFullYear()} ${escapeHtml(values.headline)}</p>
+  </footer>
+
+</main>
+</body>
+</html>`;
+}
+
 function buildCopyPrompt(profile, values, spec) {
   return [
     `You are a senior copywriter. Using this spec, write polished, conversion-focused homepage copy for "${values.headline}".`,
@@ -102,6 +285,7 @@ export default function WebsiteWizard({ profile }) {
   const values = useMemo(() => suggested(profile, wizard), [profile, wizard]);
   const spec = useMemo(() => buildSpec(profile, values), [profile, values]);
   const copyPrompt = useMemo(() => buildCopyPrompt(profile, values, spec), [profile, values, spec]);
+  const html = useMemo(() => buildHTML(profile, values), [profile, values]);
 
   const setField = (key) => (e) => {
     setWizard({ ...wizard, [key]: e.target.value });
@@ -112,6 +296,30 @@ export default function WebsiteWizard({ profile }) {
       setCopied(key);
       setTimeout(() => setCopied(null), 2000);
     });
+  };
+
+  const handleHTMLPreview = () => {
+    const win = window.open("", "_blank");
+    if (!win) return;
+    win.document.write(html);
+    win.document.close();
+  };
+
+  const handleHTMLDownload = () => {
+    const slug = (values.headline || "site")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 40) || "site";
+    const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${slug}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const isComplete = !!wizard.publishedUrl;
@@ -125,7 +333,7 @@ export default function WebsiteWizard({ profile }) {
           </span>
           <h4 className="wizard__title">Plan, brief, and publish your landing page</h4>
           <p className="wizard__sub">
-            Auto-fills from your Venture Profile. Outputs a clean spec you can paste into Framer.ai, Carrd, Wix, or any AI website builder.
+            Auto-fills from your Venture Profile. Two paths: <strong>fast test</strong> via our COD-built <a href="https://31is.com" target="_blank" rel="noopener noreferrer">31is.com</a> (paste HTML, live in 5 minutes), or <strong>polish for the long run</strong> via Framer / Carrd / Wix.
           </p>
         </div>
         <span className={`chevron ${open ? "chevron--up" : ""}`}>▾</span>
@@ -280,11 +488,41 @@ export default function WebsiteWizard({ profile }) {
               </div>
             </div>
 
+            <div className="wizard__output-block wizard__output-block--html">
+              <div className="wizard__output-header">
+                <strong>📄 Ready-to-paste HTML (for 31is.com — fastest path to live)</strong>
+                <div className="prompt-item__actions">
+                  <button
+                    className={`copy-btn ${copied === "html" ? "copy-btn--copied" : ""}`}
+                    onClick={() => handleCopy(html, "html")}
+                  >
+                    {copied === "html" ? "✓ Copied!" : "📋 Copy HTML"}
+                  </button>
+                  <button className="open-ai-btn" onClick={handleHTMLPreview}>
+                    👁️ Preview
+                  </button>
+                  <button className="open-ai-btn" onClick={handleHTMLDownload}>
+                    ⬇ Download .html
+                  </button>
+                </div>
+              </div>
+              <p className="wizard__hint">
+                Click <strong>Preview</strong> to see what the page will look like — no build step. Then sign in to <a href="https://31is.com" target="_blank" rel="noopener noreferrer">31is.com</a>, pick a subdomain like <code>yourname.31is.com</code>, paste this HTML, and you're live with form-capture wired up.
+              </p>
+              <details className="wizard__details">
+                <summary>Show generated HTML</summary>
+                <pre className="wizard__pre">{html}</pre>
+              </details>
+            </div>
+
             <div className="wizard__output-block">
               <div className="wizard__output-header">
                 <strong>🚀 Build options</strong>
               </div>
               <div className="wizard__build-links">
+                <a className="open-ai-btn open-ai-btn--featured" href="https://31is.com" target="_blank" rel="noopener noreferrer">
+                  🚀 Open 31is.com (COD) ↗
+                </a>
                 <a className="open-ai-btn" href="https://framer.com/projects/new" target="_blank" rel="noopener noreferrer">
                   Open Framer ↗
                 </a>
@@ -299,7 +537,8 @@ export default function WebsiteWizard({ profile }) {
                 </a>
               </div>
               <p className="wizard__hint">
-                Pick one. Paste the spec above into the AI builder when prompted (or use the AI Copy Prompt to draft polished words first, then drop into the builder).
+                <strong>Want fast?</strong> Use 31is.com — paste the HTML above and you're live in 5 minutes with lead capture.<br/>
+                <strong>Want polish?</strong> Use Framer or Carrd — paste the Spec above when the AI builder asks "what do you want to build?"
               </p>
             </div>
           </div>
