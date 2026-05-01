@@ -51,14 +51,21 @@ const INITIAL_WEBSITE = {
   publishedUrl: "",
 };
 
+const INITIAL_NOTES = {};
+
 export default function App() {
   const [statuses, setStatuses] = usePersistentState("cod-sw-statuses", INITIAL_STATUSES);
   const [profile, setProfile] = usePersistentState("cod-sw-profile", INITIAL_PROFILE);
   const [website] = usePersistentState("cod-sw-website", INITIAL_WEBSITE);
+  const [notes, setNotes] = usePersistentState("cod-sw-notes", INITIAL_NOTES);
 
   const handleStatusChange = useCallback((id, status) => {
     setStatuses((prev) => ({ ...prev, [id]: status }));
   }, [setStatuses]);
+
+  const handleNotesChange = useCallback((sectionId, value) => {
+    setNotes((prev) => ({ ...prev, [sectionId]: value }));
+  }, [setNotes]);
 
   const progress = {
     total: ALL_SECTIONS.length,
@@ -94,6 +101,7 @@ export default function App() {
           profile={profile}
           statuses={statuses}
           website={website}
+          notes={notes}
           sections={ALL_SECTIONS}
         />
         <BackupActions profile={profile} />
@@ -114,6 +122,8 @@ export default function App() {
                 status={statuses[s.id]}
                 onStatusChange={handleStatusChange}
                 profile={profile}
+                notes={notes}
+                onNotesChange={handleNotesChange}
               />
             ))}
           </div>
@@ -157,6 +167,8 @@ export default function App() {
                 status={statuses[s.id]}
                 onStatusChange={handleStatusChange}
                 profile={profile}
+                notes={notes}
+                onNotesChange={handleNotesChange}
               />
             ))}
           </div>

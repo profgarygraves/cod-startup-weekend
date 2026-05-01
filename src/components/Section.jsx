@@ -20,9 +20,19 @@ function resolveTaskPrompts(taskBlock, profile) {
   return taskBlock.prompts || [];
 }
 
-export default function Section({ section, status, onStatusChange, profile, defaultOpen, extra }) {
+export default function Section({
+  section,
+  status,
+  onStatusChange,
+  profile,
+  defaultOpen,
+  extra,
+  notes,
+  onNotesChange,
+}) {
   const [open, setOpen] = useState(defaultOpen || false);
   const [copied, setCopied] = useState(null);
+  const [openLesson, setOpenLesson] = useState(null);
 
   const copyPrompt = (prompt, key) => {
     navigator.clipboard.writeText(prompt).then(() => {
@@ -40,6 +50,7 @@ export default function Section({ section, status, onStatusChange, profile, defa
   const whatWereDoing = section.whatWereDoing || section.objective;
   const whyItMatters = section.whyItMatters;
   const taskPrompts = section.taskPrompts || [];
+  const sectionNotes = (notes && notes[section.id]) || "";
 
   return (
     <div className={`section-card ${open ? "section-card--open" : ""} section-card--status-${status}`}>
@@ -112,6 +123,7 @@ export default function Section({ section, status, onStatusChange, profile, defa
               <ol className="task-prompt-list">
                 {taskPrompts.map((tp, ti) => {
                   const prompts = resolveTaskPrompts(tp, profile);
+                  const taskLessonOpen = openLesson === ti;
                   return (
                     <li key={ti} className="task-prompt">
                       <div className="task-prompt__header">
@@ -162,10 +174,26 @@ export default function Section({ section, status, onStatusChange, profile, defa
                                   >
                                     Open in Claude ↗
                                   </a>
+                                  {tp.lesson && (
+                                    <button
+                                      type="button"
+                                      className={`lesson-btn ${taskLessonOpen ? "lesson-btn--open" : ""}`}
+                                      onClick={() => setOpenLesson(taskLessonOpen ? null : ti)}
+                                      aria-expanded={taskLessonOpen}
+                                    >
+                                      {taskLessonOpen ? "📚 Hide lesson" : "📚 Lesson"}
+                                    </button>
+                                  )}
                                 </div>
                               </div>
                             );
                           })}
+                          {tp.lesson && taskLessonOpen && (
+                            <div className="lesson-panel" role="note">
+                              <div className="lesson-panel__label">📚 Why this task matters</div>
+                              <p className="lesson-panel__text">{tp.lesson}</p>
+                            </div>
+                          )}
                         </div>
                       )}
                     </li>
@@ -191,6 +219,29 @@ export default function Section({ section, status, onStatusChange, profile, defa
 
           {/* Section-specific extra (e.g. Website Wizard) */}
           {extra}
+
+          {/* Notebook (per-section notes) */}
+          {onNotesChange && (
+            <div className="section-block section-block--notebook">
+              <div className="section-block__label">📓 Your notebook for this section</div>
+              <p className="section-block__sub">
+                Capture what you decided, what the AI told you, links to your work, or anything else you want to remember.
+                Saved to your browser and included in your downloadable workbook.
+              </p>
+              <textarea
+                className="section-notebook__textarea"
+                value={sectionNotes}
+                rows={4}
+                placeholder="Paste your AI output, jot decisions, drop links here…"
+                onChange={(e) => onNotesChange(section.id, e.target.value)}
+              />
+              {sectionNotes && (
+                <div className="section-notebook__meta">
+                  ✓ {sectionNotes.length.toLocaleString()} characters saved
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Pro Tip */}
           {section.tips && (
