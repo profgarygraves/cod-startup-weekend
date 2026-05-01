@@ -47,7 +47,7 @@ function asList(text) {
     .join("\n");
 }
 
-export function buildWorkbook({ profile, statuses, website, sections }) {
+export function buildWorkbook({ profile, statuses, website, notes, sections }) {
   const today = new Date().toISOString().slice(0, 10);
   const teamLine = profile.teamName ? `**Team:** ${profile.teamName}` : "";
   const memberLine = profile.members ? `**Members:** ${profile.members}` : "";
@@ -118,6 +118,15 @@ export function buildWorkbook({ profile, statuses, website, sections }) {
     lines.push("");
     lines.push(`**Deliverables**`);
     s.deliverables.forEach((d) => lines.push(`- ${d}`));
+    lines.push("");
+
+    const sectionNote = (notes && notes[s.id] && notes[s.id].trim()) || "";
+    lines.push(`**Notebook**`);
+    if (sectionNote) {
+      sectionNote.split("\n").forEach((line) => lines.push(`> ${line}`));
+    } else {
+      lines.push(`> _(empty — capture decisions, AI output, or links here next time)_`);
+    }
     lines.push("");
   }
   lines.push("---");

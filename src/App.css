@@ -1572,6 +1572,108 @@ mark.prompt-fill {
 }
 
 /* ============================================
+   LESSON BUTTON + COLLAPSIBLE PANEL
+   ============================================ */
+.lesson-btn {
+  flex-shrink: 0;
+  padding: 0.35rem 0.875rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  border: 1px solid rgba(124,58,237,0.4);
+  background: rgba(124,58,237,0.15);
+  color: var(--purple-light);
+}
+.lesson-btn:hover {
+  background: rgba(124,58,237,0.28);
+  transform: translateY(-1px);
+}
+.lesson-btn--open {
+  background: rgba(253,184,39,0.18);
+  color: var(--blue-light);
+  border-color: rgba(253,184,39,0.45);
+}
+.lesson-panel {
+  margin-top: 0.5rem;
+  padding: 0.875rem 1rem;
+  background: rgba(253,184,39,0.08);
+  border: 1px solid rgba(253,184,39,0.32);
+  border-radius: 8px;
+  animation: slideDown 0.2s ease;
+}
+.lesson-panel__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--blue-light);
+  margin-bottom: 0.4rem;
+}
+.lesson-panel__text {
+  font-size: 0.88rem;
+  color: var(--text-bright);
+  line-height: 1.6;
+  margin: 0;
+}
+[data-theme="light"] .lesson-panel {
+  background: rgba(253,184,39,0.14);
+  border-color: rgba(184,134,11,0.4);
+}
+[data-theme="light"] .lesson-panel__label { color: #8a6500; }
+[data-theme="light"] .lesson-panel__text { color: var(--text-bright); }
+
+/* ============================================
+   PER-SECTION NOTEBOOK (textarea)
+   ============================================ */
+.section-block--notebook {
+  background: rgba(5,150,105,0.06);
+  border: 1px solid rgba(5,150,105,0.25);
+  border-radius: 10px;
+  padding: 1rem 1.125rem;
+}
+.section-block__sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 0.625rem;
+}
+.section-notebook__textarea {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.625rem 0.875rem;
+  color: var(--text-bright);
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  line-height: 1.55;
+  transition: border-color 0.2s, background 0.2s;
+}
+.section-notebook__textarea:focus {
+  outline: none;
+  border-color: rgba(5,150,105,0.5);
+  background: var(--input-bg-focus);
+}
+.section-notebook__textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+.section-notebook__meta {
+  font-size: 0.72rem;
+  color: var(--green-light);
+  margin-top: 0.4rem;
+}
+[data-theme="light"] .section-block--notebook {
+  background: rgba(5,150,105,0.04);
+  border-color: rgba(5,150,105,0.22);
+}
+[data-theme="light"] .section-notebook__meta { color: #047857; }
+
+/* ============================================
    TOOLS REFERENCE — featured cards + price pills
    ============================================ */
 .tools-featured {
