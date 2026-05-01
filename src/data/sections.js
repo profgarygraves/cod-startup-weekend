@@ -392,6 +392,7 @@ export const DAY2_SECTIONS = [
       "5 social posts ready to publish",
     ],
     tools: [
+      { name: "31is.com (COD)", url: "https://31is.com", icon: "🚀" },
       { name: "Framer", url: "https://framer.com", icon: "🎨" },
       { name: "Carrd", url: "https://carrd.co", icon: "🪪" },
       { name: "Cloudflare Pages", url: "https://pages.cloudflare.com", icon: "🟧" },

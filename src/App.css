@@ -875,6 +875,19 @@
   background: rgba(217,119,87,0.12);
 }
 .open-ai-btn--claude:hover { background: rgba(217,119,87,0.22); color: #f4a983; }
+.open-ai-btn--featured {
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  color: #fff;
+  border-color: rgba(200,16,46,0.5);
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(200,16,46,0.35);
+}
+.open-ai-btn--featured:hover {
+  color: #fff;
+  background: linear-gradient(135deg, #a50d25, #8a6500);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(200,16,46,0.5);
+}
 
 /* ============================================
    WEBSITE WIZARD (Section 6)
@@ -1043,6 +1056,31 @@
   margin-top: 0.625rem;
 }
 .wizard__live a { color: var(--green-light); text-decoration: underline; }
+.wizard__output-block--html {
+  border-color: rgba(200,16,46,0.4);
+  background: linear-gradient(135deg, rgba(200,16,46,0.08), rgba(253,184,39,0.04));
+}
+.wizard__hint code {
+  background: var(--tint-medium);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.wizard__details {
+  margin-top: 0.75rem;
+  border-top: 1px dashed var(--border);
+  padding-top: 0.625rem;
+}
+.wizard__details summary {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem 0;
+  user-select: none;
+}
+.wizard__details summary:hover { color: var(--text-bright); }
+.wizard__details[open] summary { color: var(--text-bright); margin-bottom: 0.5rem; }
 
 /* ============================================
    EXPORT WORKBOOK BAR
