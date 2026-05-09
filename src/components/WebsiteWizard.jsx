@@ -95,7 +95,7 @@ function buildHTML(profile, values) {
 
   const bullets = (values.offerBullets || "")
     .split("\n")
-    .map((b) => b.replace(/^[•\-]\s*/, "").trim())
+    .map((b) => b.replace(/^[•-]\s*/, "").trim())
     .filter(Boolean);
   const bulletHTML = bullets.length
     ? bullets.map((b) => `      <li>${escapeHtml(b)}</li>`).join("\n")

@@ -63,10 +63,18 @@ export function buildWorkbook({ profile, website, notes, sections }) {
 
   const lines = [];
 
+  // Version marker for the .md restore parser. Hidden in rendered Markdown
+  // but readable when the file is fed back into the app to rehydrate state.
+  lines.push(`<!-- cod-sw-md-version: 1 -->`);
+  lines.push("");
   lines.push(`# ${businessName} — Custom GPT Brief`);
   lines.push("");
   lines.push(
     `This document is a complete brief about my business. Use it as the system instructions for a custom GPT (or as a knowledge file in a Project). The GPT should treat every fact below as authoritative.`
+  );
+  lines.push("");
+  lines.push(
+    `**Returning to the COD Startup Weekend tool?** Drop this file into the **📂 Restore Backup** button to refill your venture profile and section work — no need to re-type Day 1.`
   );
   lines.push("");
   lines.push(`_Exported ${today} from the COD AI Startup Weekend tool._`);

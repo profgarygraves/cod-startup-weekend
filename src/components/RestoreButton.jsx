@@ -1,0 +1,66 @@
+import { useRef, useState } from "react";
+import { restoreBackupFromFile } from "../lib/backup";
+
+// Reusable restore-from-file button. Renders its own hidden file input,
+// handles JSON/.md auto-detect, confirm dialog, status flash, and reload.
+//
+// Used in two places:
+//   1. BackupActions (in the "Save & restore" card)
+//   2. VentureProfile (a "Returning?" callout when the profile is empty)
+export default function RestoreButton({ sections, label = "📂 Restore from file", className = "backup-bar__btn backup-bar__btn--secondary" }) {
+  const fileInputRef = useRef(null);
+  const [status, setStatus] = useState(null);
+
+  const flash = (message, kind = "ok") => {
+    setStatus({ message, kind });
+    setTimeout(() => setStatus(null), 4500);
+  };
+
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileSelected = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    const ok = window.confirm(
+      "Restoring will replace your current profile, section work, and website wizard data. Continue?"
+    );
+    if (!ok) return;
+
+    try {
+      const result = await restoreBackupFromFile(file, sections);
+      const ts = result.exportedAt ? ` (saved ${new Date(result.exportedAt).toLocaleString()})` : "";
+      const fmt = result.format === "md" ? "GPT brief (.md)" : "backup (.json)";
+      const sec = result.sectionsRestored
+        ? ` · ${result.sectionsRestored} section${result.sectionsRestored === 1 ? "" : "s"} of work`
+        : "";
+      flash(`✓ Restored from ${fmt}${ts}${sec}. Reloading…`);
+      setTimeout(() => window.location.reload(), 1200);
+    } catch (err) {
+      flash(`Couldn't restore: ${err.message}`, "error");
+    }
+  };
+
+  return (
+    <>
+      <button type="button" className={className} onClick={handleClick}>
+        {label}
+      </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="application/json,.json,text/markdown,.md"
+        onChange={handleFileSelected}
+        style={{ display: "none" }}
+      />
+      {status && (
+        <div className={`backup-bar__status backup-bar__status--${status.kind}`}>
+          {status.message}
+        </div>
+      )}
+    </>
+  );
+}

@@ -755,4 +755,173 @@ export const POST_SECTIONS = [
       },
     ],
   },
+  {
+    id: "social-media",
+    day: "post",
+    number: 10,
+    collapsed_label: "📱 Build a Sustainable Social Media Rhythm",
+    title: "Social Media Marketing",
+    whatWereDoing: "Picking the right platforms, defining content pillars, and shipping a 30-day calendar — so social becomes a habit, not a panic.",
+    whyItMatters:
+      "Most founders post sporadically, burn out in week 2, and quit. The students who stick with it are the ones with a SYSTEM: a fixed set of pillars, a posting cadence they can actually keep, and a way to measure what works. Better to be great on one platform than mediocre on five.",
+    suggestedTime: "Month 1 — establish the rhythm before scaling content",
+    deliverables: [
+      "Chosen 1–2 primary social platforms with rationale",
+      "3–5 content pillars (repeatable themes)",
+      "30-day content calendar",
+      "Reusable post template/system for fast generation",
+      "Scheduling + measurement setup (Canva Planner, Buffer, or Metricool)",
+    ],
+    tools: [
+      { name: "Canva", url: "https://canva.com", icon: "🎨" },
+      { name: "Buffer", url: "https://buffer.com", icon: "📅" },
+      { name: "Later", url: "https://later.com", icon: "⏰" },
+      { name: "Metricool", url: "https://metricool.com", icon: "📊" },
+      { name: "ChatGPT", url: "https://chat.openai.com", icon: "🤖" },
+      { name: "Claude", url: "https://claude.ai", icon: "🧠" },
+      { name: "CapCut", url: "https://capcut.com", icon: "✂️" },
+    ],
+    tips: "Pick ONE platform you'll commit to for 90 days before adding a second. Consistency beats reach — 3 posts a week for 12 weeks crushes 30 posts in week 1 and silence after.",
+    taskPrompts: [
+      {
+        task: "Pick the 1–2 right platforms for your audience",
+        lesson:
+          "Each platform rewards a different content style: TikTok and Instagram Reels favor short-form video; LinkedIn favors expertise and B2B storytelling; X favors hot takes and threads; YouTube favors search-friendly long-form. The wrong platform fit is the #1 reason founders quit social — they're shipping good content into the wrong room. Match your audience's habits, not what's trendy.",
+        prompts: [
+          "Recommend the best 1–2 social platforms for [insert idea] targeting [audience]. For each platform, give: (1) why it fits this audience (where they spend time, what they engage with), (2) the content style that works there (short video, carousel, photo, thread, long-form), (3) typical posting cadence (posts/week), (4) what NOT to do on this platform. End with a single recommendation: which ONE I should focus on for the first 90 days, and which one I should add second.",
+        ],
+        byVentureType: {
+          service: [
+            "Recommend the best 1–2 social platforms for [insert idea] (a service business) targeting [audience]. Lean into platforms where trust and personal story matter (LinkedIn, Instagram, YouTube). For each: why it fits, content style, cadence, and what NOT to do. End with the ONE I should focus on for 90 days.",
+          ],
+          product: [
+            "Recommend the best 1–2 social platforms for [insert idea] (a physical product) targeting [audience]. Lean into platforms with strong visual + commerce features (Instagram, TikTok, Pinterest). For each: why it fits, content style, cadence, and what NOT to do. End with the ONE I should focus on for 90 days.",
+          ],
+          digital: [
+            "Recommend the best 1–2 social platforms for [insert idea] (a digital product/app) targeting [audience]. Lean into platforms where product demos + community matter (Twitter/X, LinkedIn, TikTok, YouTube). For each: why it fits, content style, cadence, and what NOT to do. End with the ONE I should focus on for 90 days.",
+          ],
+        },
+      },
+      {
+        task: "Define 3–5 content pillars",
+        lesson:
+          "Content pillars are repeatable themes you can return to weekly without running out of ideas. Without them, you'll spend every week wondering 'what should I post?' — and that decision fatigue is what kills consistency. The best pillars mix Education / Behind-the-Scenes / Customer Story / Hot Take / Personal Story so your audience never gets bored.",
+        prompts: [
+          "Define 3–5 content pillars for [business name]: [insert idea] on [the platform I picked]. For each pillar, give: (1) the theme name (2–4 words), (2) why this theme matters for [audience], (3) 5 example post ideas I could publish in the next 30 days, (4) which post format works best for this pillar (video, carousel, photo, text). Mix at least these flavors: educational, behind-the-scenes, customer story, founder POV.",
+        ],
+      },
+      {
+        task: "Build a 30-day content calendar",
+        lesson:
+          "A calendar transforms 'I should post more' into 'I post Mondays and Thursdays at 9am.' Putting it on paper forces you to confront whether you have enough ideas — and whether your cadence is actually realistic. Plan one month at a time; quarterly plans become wishful thinking.",
+        prompts: [
+          "Build a 30-day content calendar for [business name]: [insert idea]. Use the pillars I defined and the platform I picked. Give me a table with: date, pillar, post format (Reel / carousel / photo / text), hook (first line that earns the scroll-stop), 1-line caption direction, hashtags or keywords. Hit a realistic cadence — 3 posts per week, not 7. Start with a launch post, end with a recap or call-to-action post.",
+        ],
+      },
+      {
+        task: "Create a reusable post template/system",
+        lesson:
+          "Templates turn a 30-minute post into a 5-minute post. Once you've found a hook style, caption structure, and visual layout that works, repeating it lets you ship more without burning out. The best founders aren't more creative — they have better systems.",
+        prompts: [
+          "Create a reusable post template I can copy-paste into ChatGPT to generate any post for [business name]: [insert idea] in 5 minutes. The template should include: (1) a HOOK formula with 5 hook archetypes (question / pattern interrupt / contrarian / number / story), (2) a CAPTION structure (hook → context → value → CTA), (3) a VISUAL prompt I can hand to Canva or DALL·E, (4) a HASHTAG / KEYWORD bank, (5) the END CTA options I rotate through. Then show me 1 worked example using one of my pillars.",
+        ],
+      },
+      {
+        task: "Set up scheduling + measurement (Canva Content Planner, Buffer, or Metricool)",
+        lesson:
+          "Scheduling is what makes social a system instead of a panic. The best free tools — Canva Content Planner (built into the design tool you're already using), Buffer's free tier, or Metricool — let you batch a month of posts in one sitting and walk away. Measurement matters too: track only the 3 metrics that actually predict whether you're winning (reach, saves/shares, profile visits → conversions).",
+        prompts: [
+          "I want to schedule social posts for [business name]: [insert idea] without paying. Compare 3 tools: (1) Canva Content Planner (built into Canva), (2) Buffer free tier, (3) Metricool free tier. For each, give: pros, cons, posting limits, what's free vs paid, and which platforms it supports. End with which ONE I should pick given a beginner's skill level + 1 hour a week to manage. Then list the 3 metrics I should track weekly to know if my content is working — and ignore everything else.",
+        ],
+      },
+      {
+        task: "📋 Create your FINAL Social Media Plan (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Compile your platform pick, content pillars, 30-day calendar, post template, and scheduling/measurement setup into one operating doc, then paste it into the 📋 Final output box of your notebook. The GPT uses this to help you generate consistent on-brand posts in seconds for the next 6 months.",
+        prompts: [
+          "Create a FINAL Social Media Plan for [business name]: [insert idea] that I will paste into my workbook. Include in this exact order: (1) chosen primary platform + 1-line rationale; (2) chosen secondary platform (if any); (3) my 3–5 content pillars (theme + format + 1-line description each); (4) my 30-day posting cadence (which days, what time, which pillars rotate); (5) my reusable post template (hook formulas + caption structure + CTA bank); (6) my chosen scheduling tool + the 3 metrics I'll track weekly. Format as a clean operating doc. Output ONLY the final text I should paste in.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "selling",
+    day: "post",
+    number: 11,
+    collapsed_label: "💵 Turn Your Pitch Into Paying Customers",
+    title: "Selling",
+    whatWereDoing: "Building a sales habit — a 30-second customer pitch, an objection-handling cheat sheet, and daily/weekly/monthly activity targets that turn effort into revenue.",
+    whyItMatters:
+      "Marketing brings people close. Sales is what makes them buy. Most students avoid selling because it feels pushy — but selling is just helping the right person make a decision. Without a sales habit, all the content and prototypes in the world produce $0. Sales activity is the only leading indicator of revenue.",
+    suggestedTime: "Month 2 — once you have a real product to talk about",
+    deliverables: [
+      "30-second customer-facing sales pitch",
+      "Objection-handling cheat sheet (top 8 objections + responses)",
+      "Daily / weekly / monthly sales activity targets",
+      "Weekly sales review template",
+      "AI roleplay practice log (3+ rounds)",
+    ],
+    tools: [
+      { name: "ChatGPT", url: "https://chat.openai.com", icon: "🤖" },
+      { name: "Claude", url: "https://claude.ai", icon: "🧠" },
+      { name: "HubSpot CRM", url: "https://www.hubspot.com/products/crm", icon: "🟧" },
+      { name: "Pipedrive", url: "https://pipedrive.com", icon: "📈" },
+      { name: "Notion", url: "https://notion.so", icon: "📋" },
+      { name: "Calendly", url: "https://calendly.com", icon: "📅" },
+      { name: "Loom", url: "https://loom.com", icon: "📹" },
+    ],
+    tips: "Activity is the only thing you control. You can't control whether they buy — but you CAN control how many you talk to today. Set an activity target you can hit even on a bad day, and the revenue follows.",
+    taskPrompts: [
+      {
+        task: "Write your 30-second customer-facing sales pitch",
+        lesson:
+          "The judge pitch (Section 8) tells a story; the sales pitch closes a deal. They're different. The sales pitch is shorter (30 seconds, not 5 minutes), customer-focused (their pain, not your features), and ends with a SPECIFIC ask (book a call, place an order, sign up for a trial). If your pitch can't fit in an elevator ride, it's too long.",
+        prompts: [
+          "Write a 30-second customer-facing sales pitch for [insert idea] targeting [audience]. Use this exact structure: (1) PAIN (the problem they're feeling right now — 1 sentence using their language), (2) PROMISE (the outcome we deliver — 1 sentence, specific and measurable), (3) PROOF (one data point, customer line, or guarantee — 1 sentence), (4) ASK (the ONE thing I want them to do next — 1 sentence). No buzzwords, no jargon. End with 3 different ASK options I can swap depending on context (high-intent buyer, browser, referral).",
+        ],
+      },
+      {
+        task: "Practice with AI sales roleplay (the hardest customer)",
+        lesson:
+          "Real customers will push back. AI roleplay lets you rehearse the worst-case conversation in 5 minutes — what to say when they object on price, when they ghost, when they ask 'why not just use [free alternative]?'. The point isn't to memorize answers — it's to find the questions that stump you so you can prep.",
+        prompts: [
+          "Roleplay as the toughest possible customer for [insert idea]. You are [audience] but skeptical, time-pressured, and have 2 cheaper alternatives in mind. Ask me 8 hard questions, one at a time, including: (1) why your price, (2) what makes you different from [obvious competitor], (3) what if it doesn't work for me, (4) I don't have time right now, (5) I'll think about it, (6) I need to ask my [partner / boss / spouse] first, (7) why now, (8) one curveball question. After all 8 answers, score me 1–10 on each, flag my weakest answer, and rewrite it the way it should sound.",
+        ],
+      },
+      {
+        task: "Build an objection-handling cheat sheet",
+        lesson:
+          "Pre-written objection responses turn 'um, well…' moments into confident answers. The top 8 objections cover ~80% of what you'll hear in real life. Memorize them, internalize the LOGIC behind them (you're not arguing, you're reframing), and selling stops feeling scary.",
+        prompts: [
+          "Build an objection-handling cheat sheet for [insert idea] targeting [audience]. Cover these 8 objections, with a 2–3 sentence response for each that reframes (not argues): (1) \"It's too expensive,\" (2) \"I'll think about it,\" (3) \"I need to talk to my partner/boss,\" (4) \"We already use [competitor],\" (5) \"Just send me more info,\" (6) \"Now's not the right time,\" (7) \"Does it really work?\" / \"What if it doesn't work for me?\", (8) \"Can you do it cheaper / give me a discount?\" For each, also note the EMOTION behind the objection so I know what they're really saying.",
+        ],
+      },
+      {
+        task: "Set daily / weekly / monthly sales activity targets",
+        lesson:
+          "Activity targets — outreach DMs sent, calls booked, follow-ups completed — are the only metrics you fully control. Revenue is a lagging indicator; activity is the leading one. Set targets you can hit even on a bad day; the math compounds. Most founders fail because they don't have an activity baseline; the ones who succeed treat it like brushing teeth.",
+        prompts: [
+          "Set daily / weekly / monthly sales activity targets for [insert idea] targeting [audience], with the goal of $1,000/month in 6 months. Use realistic conversion benchmarks (cold DM → reply ≈ 10%, reply → call ≈ 30%, call → close ≈ 20%). Reverse-engineer: how many cold outreaches per WEEK do I need to hit my revenue goal? Give me: (1) DAILY minimum activity (the floor I hit even on bad days), (2) WEEKLY targets (outreach + follow-ups + calls), (3) MONTHLY targets (revenue + new customers + pipeline). End with which 1–2 numbers I should track on a Notion or spreadsheet dashboard, and ignore the rest.",
+        ],
+      },
+      {
+        task: "Run a weekly sales review with AI as your coach",
+        lesson:
+          "Weekly reviews are how you turn random selling into systematic improvement. The AI plays a friendly-but-honest sales manager: looks at what you did, what worked, what didn't, and what to change next week. 30 minutes every Friday compounds into way better selling by month 3.",
+        prompts: [
+          "Act as my weekly sales coach for [insert idea]. Each Friday I'll tell you: (1) outreach sent this week, (2) replies received, (3) calls booked, (4) sales closed, (5) revenue, (6) one thing that worked, (7) one thing that didn't. After I share, give me: a 1-paragraph honest diagnostic (no flattery), the SINGLE biggest leverage point I should fix next week, and 1 specific experiment to run. End with a reminder of my activity targets and how this week tracked against them. This week: [paste my numbers].",
+        ],
+      },
+      {
+        task: "📋 Create your FINAL Sales Playbook (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Compile your sales pitch, objection cheat sheet, activity targets, and weekly-review template into one operating playbook, then paste it into the 📋 Final output box of your notebook. The GPT uses this to roleplay tough conversations, prep you for sales calls, and run your weekly reviews going forward.",
+        prompts: [
+          "Create a FINAL Sales Playbook for [insert idea] targeting [audience] that I will paste into my workbook. Include in this exact order: (1) my 30-second sales pitch (PAIN / PROMISE / PROOF / ASK structure); (2) my 3 ask variations (high-intent / browser / referral); (3) my objection cheat sheet — 8 objections, each with a 2–3 sentence response; (4) my daily / weekly / monthly activity targets and the 1–2 numbers I track; (5) my weekly review template (the 7 questions I answer every Friday). Format as a clean operating playbook. Output ONLY the final text I should paste in.",
+        ],
+      },
+    ],
+  },
 ];
