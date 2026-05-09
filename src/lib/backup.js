@@ -397,16 +397,24 @@ export function parseMarkdownBrief(text, sections) {
   // Normalize line endings + strip BOM in case the caller didn't.
   const normalized = normalizeText(text);
 
-  // Forgiving format check: must have at least ONE recognizable signal —
-  // the version marker, an "About the Business" heading, or a "Custom GPT
-  // Brief" title. Any one of these is enough.
+  // Detect format. Two formats are supported:
+  //   - NEW (Phase N+): "Custom GPT Brief" with `## About the Business`
+  //   - LEGACY (pre-Phase-N): "Team Workbook" with `## Venture Profile` and
+  //     `### Section N — Title` subsections under `## Section Detail`.
   const hasMarker = /cod-sw-md-version/.test(normalized);
   const hasAbout = /##\s+About the Business/m.test(normalized);
-  const hasTitle = /^#\s.*Custom GPT Brief/m.test(normalized);
-  if (!hasMarker && !hasAbout && !hasTitle) {
+  const hasNewTitle = /^#\s.*Custom GPT Brief/m.test(normalized);
+  const hasLegacyTitle = /^#\s.*Team Workbook/m.test(normalized);
+  const hasLegacyProfile = /##\s+Venture Profile/m.test(normalized);
+
+  if (hasLegacyTitle || hasLegacyProfile) {
+    return parseLegacyMarkdownBrief(normalized, sections);
+  }
+
+  if (!hasMarker && !hasAbout && !hasNewTitle) {
     const preview = normalized.trim().slice(0, 80).replace(/\n/g, " ");
     throw new Error(
-      `That doesn't look like a COD GPT brief. The file should start with "# <Business> — Custom GPT Brief" and have an "## About the Business" section. (Got: "${preview}…")`
+      `That doesn't look like a COD workbook or GPT brief. The file should start with "# <Business> — Custom GPT Brief" or "# COD AI Startup Weekend — Team Workbook". (Got: "${preview}…")`
     );
   }
 
@@ -435,6 +443,169 @@ export function parseMarkdownBrief(text, sections) {
     }
   }
   return { profile, website, notes };
+}
+
+// === Legacy "Team Workbook" parser (pre-Phase-N exports) ====================
+// The legacy export had a different structure:
+//   - Title:    "# COD AI Startup Weekend — Team Workbook"
+//   - Profile:  "## Venture Profile" with bullets like "Idea name", "Core
+//               offer", "Price" (vs new "Business name", "Core offer / value
+//               proposition", "Pricing options")
+//   - Top:      `**Team:** X` / `**Members:** X` lines at the top
+//   - Sections: nested under "## Section Detail" as `### Section N — Title`
+//   - Section work: inside a "**Notebook**" block as `> blockquote` lines.
+//                   No Final/Notes split — everything is freeform notes.
+//   - Website:  "## Website (Section 6)"
+
+const LEGACY_PROFILE_FIELD_MAP = {
+  "Idea name": "ideaName",
+  "What it is": "description",
+  "Problem we solve": "problem",
+  "Target customer": "audience",
+  "Core offer": "offer",
+  Price: "price",
+};
+
+function parseLegacyMarkdownBrief(normalized, sections) {
+  // 1. Extract Team / Members from the inline lines at the top.
+  const teamMatch = /^\s*\*\*Team:\*\*\s*(.+?)\s*$/m.exec(normalized);
+  const membersMatch = /^\s*\*\*Members:\*\*\s*(.+?)\s*$/m.exec(normalized);
+
+  // 2. Parse the "## Venture Profile" block.
+  const profileBlock = extractBlockAfterHeading(normalized, /^##\s+Venture Profile\s*$/m);
+  const profile = {
+    ventureType: "",
+    startingPoint: "",
+    marketAreaScope: "",
+    marketArea: "",
+    teamName: teamMatch ? teamMatch[1].trim() : "",
+    members: membersMatch ? membersMatch[1].trim() : "",
+    ideaName: "",
+    description: "",
+    problem: "",
+    audience: "",
+    offer: "",
+    price: "",
+    visualPrototypeNotes: "",
+  };
+  if (profileBlock) {
+    const fields = parseBulletKeyValues(profileBlock);
+    for (const [label, key] of Object.entries(LEGACY_PROFILE_FIELD_MAP)) {
+      if (fields[label]) profile[key] = fields[label];
+    }
+    if (fields["Venture type"]) {
+      profile.ventureType = reverseMatch(VENTURE_TYPE_REVERSE, fields["Venture type"]);
+    }
+    if (fields["Starting point"]) {
+      profile.startingPoint = reverseMatch(STARTING_POINT_REVERSE, fields["Starting point"]);
+    }
+    if (fields["Market area"]) {
+      const market = fields["Market area"];
+      const splitIdx = market.lastIndexOf(" — ");
+      if (splitIdx > 0) {
+        const left = market.slice(0, splitIdx).trim();
+        const right = market.slice(splitIdx + 3).trim();
+        const scope = reverseMatch(MARKET_SCOPE_REVERSE, right);
+        if (scope) {
+          profile.marketAreaScope = scope;
+          profile.marketArea = left;
+        } else {
+          profile.marketArea = market;
+        }
+      } else {
+        const scope = reverseMatch(MARKET_SCOPE_REVERSE, market);
+        if (scope) profile.marketAreaScope = scope;
+        else profile.marketArea = market;
+      }
+    }
+  }
+
+  // 3. Parse `### Section N — Title` subheadings.
+  const notes = {};
+  const titleIndex = buildTitleIndex(sections);
+  const sectionRe = /^###\s+Section\s+\d+\s+[—-]\s+(.+?)\s*$/gm;
+  const matches = [];
+  let m;
+  while ((m = sectionRe.exec(normalized)) !== null) {
+    matches.push({ title: m[1].trim(), start: m.index, headingEnd: m.index + m[0].length });
+  }
+  for (let i = 0; i < matches.length; i++) {
+    const { title, headingEnd } = matches[i];
+    const end = i + 1 < matches.length ? matches[i + 1].start : normalized.length;
+    const body = normalized.slice(headingEnd, end);
+    const sectionId = titleIndex.get(title.toLowerCase());
+    if (!sectionId) continue;
+    const noteText = extractLegacyNotebook(body);
+    if (noteText) {
+      // Legacy had no Final/Notes split — promote everything to .notes so
+      // the user keeps the content. They can move it to the Final box later
+      // and re-export.
+      notes[sectionId] = { final: "", notes: noteText };
+    }
+  }
+
+  // 4. Parse "## Website (Section 6)" — same field labels as new format.
+  let website = null;
+  const websiteBlock = extractBlockAfterHeading(
+    normalized,
+    /^##\s+Website(?:\s*\([^)]*\))?\s*$/m
+  );
+  if (websiteBlock) {
+    website = parseWebsiteBlock(websiteBlock);
+    // Legacy also wrote "🟢 **Published at:** URL" outside the bullet list.
+    const pubMatch = /\*\*Published at:\*\*\s*(\S+)/.exec(websiteBlock);
+    if (pubMatch && (!website.publishedUrl || !website.publishedUrl.trim())) {
+      website.publishedUrl = pubMatch[1];
+    }
+  }
+
+  if (
+    !profile.ideaName &&
+    !profile.description &&
+    Object.keys(notes).length === 0 &&
+    !website
+  ) {
+    throw new Error(
+      "Found a legacy COD workbook, but couldn't extract any content from it. The file may be empty or corrupted."
+    );
+  }
+
+  return { profile, website, notes };
+}
+
+// Extract everything between a heading match and the next `## ` heading
+// (or end of file). Returns null if the heading wasn't found.
+function extractBlockAfterHeading(text, headingRe) {
+  const match = headingRe.exec(text);
+  if (!match) return null;
+  const start = match.index + match[0].length;
+  const rest = text.slice(start);
+  const next = /\n##\s/.exec(rest);
+  return next ? rest.slice(0, next.index) : rest;
+}
+
+// In a legacy section body, find the "**Notebook**" label and collect the
+// `> blockquote` lines that follow. Drops the "_(empty — capture decisions…)_"
+// placeholder if that's all there is.
+function extractLegacyNotebook(body) {
+  const m = /\*\*Notebook\*\*/.exec(body);
+  if (!m) return "";
+  const after = body.slice(m.index + m[0].length).split("\n");
+  const lines = [];
+  let started = false;
+  for (const raw of after) {
+    if (/^>\s?/.test(raw)) {
+      started = true;
+      lines.push(raw.replace(/^>\s?/, ""));
+      continue;
+    }
+    if (!started && raw.trim() === "") continue;
+    if (started) break;
+    if (raw.trim().startsWith("---") || raw.trim().startsWith("###") || raw.trim().startsWith("##")) break;
+  }
+  const joined = lines.join("\n").trim();
+  if (/^_\(empty/.test(joined)) return "";
+  return joined;
 }
 
 function restoreFromMarkdown(text, sections) {
