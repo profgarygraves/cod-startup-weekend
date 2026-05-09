@@ -1305,10 +1305,11 @@
 }
 .backup-bar__status {
   width: 100%;
-  font-size: 0.82rem;
-  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  padding: 0.65rem 0.85rem;
   border-radius: 6px;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
+  line-height: 1.5;
 }
 .backup-bar__status--ok {
   background: rgba(5,150,105,0.15);
@@ -1316,9 +1317,15 @@
   border: 1px solid rgba(5,150,105,0.3);
 }
 .backup-bar__status--error {
-  background: rgba(200,16,46,0.15);
-  color: var(--purple-light);
-  border: 1px solid rgba(200,16,46,0.4);
+  background: rgba(200,16,46,0.18);
+  color: #ffd1d1;
+  border: 1px solid rgba(200,16,46,0.5);
+  word-break: break-word;
+}
+[data-theme="light"] .backup-bar__status--error {
+  background: rgba(200,16,46,0.10);
+  color: #8a1820;
+  border-color: rgba(200,16,46,0.4);
 }
 
 /* ============================================
