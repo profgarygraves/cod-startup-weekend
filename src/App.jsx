@@ -86,7 +86,7 @@ export default function App() {
 
       <div className="container" style={{ paddingTop: "2rem" }}>
         <PersistenceBanner />
-        <VentureProfile profile={profile} onChange={setProfile} />
+        <VentureProfile profile={profile} onChange={setProfile} sections={ALL_SECTIONS} />
         <div className="auto-fill-bar">
           <span className="auto-fill-bar__note">
             ✨ Every prompt below auto-fills from your profile. Edit the profile and prompts update instantly.
@@ -104,7 +104,7 @@ export default function App() {
           notes={notes}
           sections={ALL_SECTIONS}
         />
-        <BackupActions profile={profile} />
+        <BackupActions profile={profile} sections={ALL_SECTIONS} />
       </div>
 
       <section className="roadmap-day" id="day1">

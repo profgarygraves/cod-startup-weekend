@@ -1,4 +1,5 @@
 import { useState } from "react";
+import RestoreButton from "./RestoreButton";
 
 const VENTURE_TYPES = [
   { value: "", label: "— Pick one —" },
@@ -98,8 +99,16 @@ function summaryLine(profile) {
   return [type, start, area].filter(Boolean).join(" · ");
 }
 
-export default function VentureProfile({ profile, onChange }) {
+// True when the profile is essentially empty (returning Day 2 student
+// who lost localStorage). Shows the "Restore from file" callout.
+function isMostlyEmpty(profile) {
+  const meaningful = ["ideaName", "description", "audience", "problem", "offer"];
+  return meaningful.every((k) => !profile?.[k] || !profile[k].trim());
+}
+
+export default function VentureProfile({ profile, onChange, sections }) {
   const complete = isComplete(profile);
+  const showRestoreCallout = isMostlyEmpty(profile);
   const [open, setOpen] = useState(!complete);
 
   const handleField = (key) => (e) => {
@@ -141,6 +150,21 @@ export default function VentureProfile({ profile, onChange }) {
 
       {open && (
         <div className="venture-profile__body">
+          {showRestoreCallout && sections && (
+            <div className="venture-profile__restore-callout">
+              <div className="venture-profile__restore-text">
+                <strong>👋 Returning to Day 2?</strong>
+                <p>
+                  If you exported your work yesterday, drop your <strong>.md GPT brief</strong> or <strong>.json backup</strong> here to restore your venture profile and section work — no need to re-type anything.
+                </p>
+              </div>
+              <RestoreButton
+                sections={sections}
+                label="📂 Restore from file"
+                className="venture-profile__restore-btn"
+              />
+            </div>
+          )}
           <div className="venture-profile__intro">
             <strong>Tell us where you're starting.</strong>
             <p>This determines whether we help you brainstorm new ideas or sharpen the one you already have.</p>
