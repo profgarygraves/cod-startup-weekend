@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { buildWorkbook, suggestedFilename, downloadWorkbook } from "../lib/export";
 
-export default function ExportWorkbook({ profile, statuses, website, notes, sections }) {
+export default function ExportWorkbook({ profile, website, notes, sections }) {
   const [justDownloaded, setJustDownloaded] = useState(false);
 
   const handleDownload = () => {
-    const content = buildWorkbook({ profile, statuses, website, notes, sections });
+    const content = buildWorkbook({ profile, website, notes, sections });
     downloadWorkbook(content, suggestedFilename(profile));
     setJustDownloaded(true);
     setTimeout(() => setJustDownloaded(false), 2500);
   };
 
   const handlePreview = () => {
-    const content = buildWorkbook({ profile, statuses, website, notes, sections });
+    const content = buildWorkbook({ profile, website, notes, sections });
     const win = window.open("", "_blank");
     if (!win) return;
     const safe = content.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
@@ -24,14 +24,19 @@ export default function ExportWorkbook({ profile, statuses, website, notes, sect
     win.document.close();
   };
 
-  const completed = sections.filter((s) => statuses[s.id] === "complete").length;
+  const sectionsWithFinal = sections.filter((s) => {
+    const v = notes && notes[s.id];
+    if (!v) return false;
+    if (typeof v === "string") return v.trim().length > 0;
+    return typeof v.final === "string" && v.final.trim().length > 0;
+  }).length;
 
   return (
     <div className="export-bar">
       <div className="export-bar__info">
-        <strong>📥 Download your team workbook</strong>
+        <strong>📥 Download your Custom GPT brief</strong>
         <p>
-          One markdown file with your venture profile, progress ({completed}/{sections.length} sections complete), and website spec — perfect for handing in or sharing with your team.
+          A single markdown file with your business facts and FINAL outputs ({sectionsWithFinal}/{sections.length} sections captured). Paste it as the system instructions for a Custom GPT or as a knowledge file in a Project — the GPT will then know everything about your business.
         </p>
       </div>
       <div className="export-bar__actions">

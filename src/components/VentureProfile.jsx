@@ -47,7 +47,7 @@ const FIELDS = [
   },
   {
     key: "description",
-    label: "What it is (one sentence)",
+    label: "What it is",
     placeholder: "e.g. A weekly meal-prep service for busy nursing students",
     type: "textarea",
   },
@@ -71,9 +71,15 @@ const FIELDS = [
   },
   {
     key: "price",
-    label: "Price (optional for now)",
-    placeholder: "e.g. $25/month or $99 one-time",
-    type: "input",
+    label: "Price (one or more options)",
+    placeholder: "e.g.\nBasic — $25/month\nPro — $79/month\nOne-time setup — $99",
+    type: "textarea",
+  },
+  {
+    key: "visualPrototypeNotes",
+    label: "Visual prototype notes",
+    placeholder: "Describe what your prototype looks like or how the service flows — e.g. a 3D-printed dummy, a packaging mockup, the step-by-step service workflow, or (for a digital product) a wireframe / clickable demo.",
+    type: "textarea",
   },
 ];
 

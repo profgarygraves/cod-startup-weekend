@@ -20,6 +20,16 @@ function resolveTaskPrompts(taskBlock, profile) {
   return taskBlock.prompts || [];
 }
 
+// Notes were once a flat string per section. They're now { final, notes }.
+// Treat any legacy string value as freeform notes.
+function readSectionNote(value) {
+  if (typeof value === "string") return { final: "", notes: value };
+  if (value && typeof value === "object") {
+    return { final: value.final || "", notes: value.notes || "" };
+  }
+  return { final: "", notes: "" };
+}
+
 export default function Section({
   section,
   status,
@@ -50,7 +60,11 @@ export default function Section({
   const whatWereDoing = section.whatWereDoing || section.objective;
   const whyItMatters = section.whyItMatters;
   const taskPrompts = section.taskPrompts || [];
-  const sectionNotes = (notes && notes[section.id]) || "";
+  const sectionNote = readSectionNote(notes && notes[section.id]);
+
+  const updateNoteField = (field, value) => {
+    onNotesChange?.(section.id, { ...sectionNote, [field]: value });
+  };
 
   return (
     <div className={`section-card ${open ? "section-card--open" : ""} section-card--status-${status}`}>
@@ -125,7 +139,12 @@ export default function Section({
                   const prompts = resolveTaskPrompts(tp, profile);
                   const taskLessonOpen = openLesson === ti;
                   return (
-                    <li key={ti} className="task-prompt">
+                    <li key={ti} className={`task-prompt ${tp.isFinal ? "task-prompt--final" : ""}`}>
+                      {tp.isFinal && (
+                        <div className="task-prompt__final-banner">
+                          📋 FINAL OUTPUT — paste the AI's reply into your notebook below
+                        </div>
+                      )}
                       <div className="task-prompt__header">
                         <span className="task-prompt__num">{ti + 1}</span>
                         <span className="task-prompt__label">{tp.task}</span>
@@ -220,26 +239,50 @@ export default function Section({
           {/* Section-specific extra (e.g. Website Wizard) */}
           {extra}
 
-          {/* Notebook (per-section notes) */}
+          {/* Notebook (per-section notes — split into Final output + Notes) */}
           {onNotesChange && (
             <div className="section-block section-block--notebook">
               <div className="section-block__label">📓 Your notebook for this section</div>
               <p className="section-block__sub">
-                Capture what you decided, what the AI told you, links to your work, or anything else you want to remember.
                 Saved to your browser and included in your downloadable workbook.
               </p>
-              <textarea
-                className="section-notebook__textarea"
-                value={sectionNotes}
-                rows={4}
-                placeholder="Paste your AI output, jot decisions, drop links here…"
-                onChange={(e) => onNotesChange(section.id, e.target.value)}
-              />
-              {sectionNotes && (
-                <div className="section-notebook__meta">
-                  ✓ {sectionNotes.length.toLocaleString()} characters saved
-                </div>
-              )}
+
+              <div className="section-notebook__field section-notebook__field--final">
+                <label className="section-notebook__field-label">
+                  📋 Final output (paste AI's reply to the FINAL prompt here)
+                </label>
+                <p className="section-notebook__field-hint">
+                  This is what gets fed to your custom GPT — the canonical record of this section.
+                </p>
+                <textarea
+                  className="section-notebook__textarea section-notebook__textarea--final"
+                  value={sectionNote.final}
+                  rows={6}
+                  placeholder="Paste the AI's response to the FINAL prompt above…"
+                  onChange={(e) => updateNoteField("final", e.target.value)}
+                />
+                {sectionNote.final && (
+                  <div className="section-notebook__meta">
+                    ✓ {sectionNote.final.length.toLocaleString()} characters in Final output
+                  </div>
+                )}
+              </div>
+
+              <div className="section-notebook__field">
+                <label className="section-notebook__field-label">
+                  📝 Notes / scratch (just for you)
+                </label>
+                <p className="section-notebook__field-hint">
+                  Decisions, links, reminders. Not included in the GPT brief.
+                </p>
+                <textarea
+                  className="section-notebook__textarea"
+                  value={sectionNote.notes}
+                  rows={3}
+                  placeholder="Jot decisions, drop links, write reminders…"
+                  onChange={(e) => updateNoteField("notes", e.target.value)}
+                />
+              </div>
             </div>
           )}
 

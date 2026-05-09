@@ -1,15 +1,3 @@
-const STATUS_GLYPH = {
-  "not-started": "⭕",
-  "in-progress": "🔄",
-  complete: "✅",
-};
-
-const STATUS_LABEL = {
-  "not-started": "Not started",
-  "in-progress": "In progress",
-  complete: "Complete",
-};
-
 const VENTURE_TYPE_LABEL = {
   service: "Service business",
   product: "Physical product",
@@ -33,129 +21,150 @@ const MARKET_AREA_SCOPE_LABEL = {
   international: "International",
 };
 
-function blank(value) {
-  return typeof value === "string" && value.trim() ? value.trim() : "_(blank)_";
+function trimOrNull(value) {
+  if (typeof value !== "string") return null;
+  const t = value.trim();
+  return t || null;
 }
 
-function asList(text) {
-  if (!text || !text.trim()) return "_(blank)_";
+// Indent each line of a multi-line string by 2 spaces so it nests cleanly
+// under a Markdown bullet without breaking the list.
+function indentBlock(text, prefix = "  ") {
   return text
     .split("\n")
-    .map((l) => l.trim())
-    .filter(Boolean)
-    .map((l) => (l.startsWith("•") || l.startsWith("-") ? l : `• ${l}`))
+    .map((line) => `${prefix}${line}`)
     .join("\n");
 }
 
-export function buildWorkbook({ profile, statuses, website, notes, sections }) {
-  const today = new Date().toISOString().slice(0, 10);
-  const teamLine = profile.teamName ? `**Team:** ${profile.teamName}` : "";
-  const memberLine = profile.members ? `**Members:** ${profile.members}` : "";
+// Notes were once a flat string per section. They're now { final, notes }.
+// Treat any legacy string value as freeform notes so older saves still export.
+function readNote(value) {
+  if (typeof value === "string") return { final: "", notes: value };
+  if (value && typeof value === "object") {
+    return { final: value.final || "", notes: value.notes || "" };
+  }
+  return { final: "", notes: "" };
+}
 
-  const completed = sections.filter((s) => statuses[s.id] === "complete").length;
-  const inProgress = sections.filter((s) => statuses[s.id] === "in-progress").length;
+function pushKeyValue(lines, label, value) {
+  const v = trimOrNull(value);
+  if (!v) return;
+  if (v.includes("\n")) {
+    lines.push(`- **${label}:**`);
+    lines.push(indentBlock(v));
+  } else {
+    lines.push(`- **${label}:** ${v}`);
+  }
+}
+
+export function buildWorkbook({ profile, website, notes, sections }) {
+  const today = new Date().toISOString().slice(0, 10);
+  const businessName = trimOrNull(profile.ideaName) || trimOrNull(profile.teamName) || "My Business";
 
   const lines = [];
-  lines.push(`# COD AI Startup Weekend — Team Workbook`);
+
+  lines.push(`# ${businessName} — Custom GPT Brief`);
   lines.push("");
-  if (teamLine) lines.push(teamLine);
-  if (memberLine) lines.push(memberLine);
-  lines.push(`**Exported:** ${today}`);
+  lines.push(
+    `This document is a complete brief about my business. Use it as the system instructions for a custom GPT (or as a knowledge file in a Project). The GPT should treat every fact below as authoritative.`
+  );
+  lines.push("");
+  lines.push(`_Exported ${today} from the COD AI Startup Weekend tool._`);
   lines.push("");
   lines.push("---");
   lines.push("");
 
-  lines.push(`## Venture Profile`);
+  // === About the business ===
+  lines.push(`## About the Business`);
   lines.push("");
-  lines.push(`- **Venture type:** ${VENTURE_TYPE_LABEL[profile.ventureType] || "_(not selected)_"}`);
-  lines.push(`- **Starting point:** ${STARTING_POINT_LABEL[profile.startingPoint] || "_(not selected)_"}`);
+  pushKeyValue(lines, "Business name", profile.ideaName);
+  pushKeyValue(lines, "What it is", profile.description);
+  if (profile.ventureType) {
+    pushKeyValue(lines, "Venture type", VENTURE_TYPE_LABEL[profile.ventureType]);
+  }
   const scopeLabel = MARKET_AREA_SCOPE_LABEL[profile.marketAreaScope];
-  const areaText = (profile.marketArea || "").trim();
-  const marketAreaLine = scopeLabel && areaText
-    ? `${areaText} — ${scopeLabel}`
-    : areaText || scopeLabel || "_(not selected)_";
-  lines.push(`- **Market area:** ${marketAreaLine}`);
-  lines.push(`- **Idea name:** ${blank(profile.ideaName)}`);
-  lines.push(`- **What it is:** ${blank(profile.description)}`);
-  lines.push(`- **Problem we solve:** ${blank(profile.problem)}`);
-  lines.push(`- **Target customer:** ${blank(profile.audience)}`);
-  lines.push(`- **Core offer:** ${blank(profile.offer)}`);
-  lines.push(`- **Price:** ${blank(profile.price)}`);
-  lines.push("");
-  lines.push("---");
-  lines.push("");
-
-  lines.push(`## Progress`);
-  lines.push("");
-  lines.push(`**${completed} of ${sections.length} sections complete** · ${inProgress} in progress`);
-  lines.push("");
-  for (const s of sections) {
-    const status = statuses[s.id] || "not-started";
-    lines.push(`- ${STATUS_GLYPH[status]} **Section ${s.number}** — ${s.title} _(${STATUS_LABEL[status]})_`);
+  const areaText = trimOrNull(profile.marketArea);
+  const market = scopeLabel && areaText ? `${areaText} — ${scopeLabel}` : areaText || scopeLabel;
+  pushKeyValue(lines, "Market", market);
+  pushKeyValue(lines, "Problem we solve", profile.problem);
+  pushKeyValue(lines, "Target customer", profile.audience);
+  pushKeyValue(lines, "Core offer / value proposition", profile.offer);
+  pushKeyValue(lines, "Pricing options", profile.price);
+  pushKeyValue(lines, "Visual prototype notes", profile.visualPrototypeNotes);
+  if (profile.startingPoint) {
+    pushKeyValue(lines, "Starting point", STARTING_POINT_LABEL[profile.startingPoint]);
   }
+  pushKeyValue(lines, "Team", profile.teamName);
+  pushKeyValue(lines, "Members", profile.members);
   lines.push("");
   lines.push("---");
   lines.push("");
 
-  lines.push(`## Section Detail`);
-  lines.push("");
+  // === FINAL outputs from each section ===
+  let anySection = false;
   for (const s of sections) {
-    const status = statuses[s.id] || "not-started";
-    lines.push(`### Section ${s.number} — ${s.title}`);
+    const note = readNote(notes && notes[s.id]);
+    const final = trimOrNull(note.final);
+    const freeform = trimOrNull(note.notes);
+    if (!final && !freeform) continue;
+    anySection = true;
+    lines.push(`## ${s.title}`);
     lines.push("");
-    lines.push(`- **Status:** ${STATUS_GLYPH[status]} ${STATUS_LABEL[status]}`);
-    if (s.suggestedTime) lines.push(`- **Suggested timing:** ${s.suggestedTime}`);
-    if (s.whatWereDoing) lines.push(`- **What we're doing:** ${s.whatWereDoing}`);
-    if (s.whyItMatters) lines.push(`- **Why it matters:** ${s.whyItMatters}`);
-    lines.push("");
-    lines.push(`**Tasks**`);
-    const taskLabels = (s.taskPrompts || []).map((tp) => tp.task);
-    if (taskLabels.length === 0 && Array.isArray(s.tasks)) {
-      s.tasks.forEach((t) => lines.push(`- [${status === "complete" ? "x" : " "}] ${t}`));
-    } else {
-      taskLabels.forEach((t) => lines.push(`- [${status === "complete" ? "x" : " "}] ${t}`));
-    }
-    lines.push("");
-    lines.push(`**Deliverables**`);
-    s.deliverables.forEach((d) => lines.push(`- ${d}`));
-    lines.push("");
-
-    const sectionNote = (notes && notes[s.id] && notes[s.id].trim()) || "";
-    lines.push(`**Notebook**`);
-    if (sectionNote) {
-      sectionNote.split("\n").forEach((line) => lines.push(`> ${line}`));
-    } else {
-      lines.push(`> _(empty — capture decisions, AI output, or links here next time)_`);
-    }
-    lines.push("");
-  }
-  lines.push("---");
-  lines.push("");
-
-  lines.push(`## Website (Section 6)`);
-  lines.push("");
-  if (website && (website.headline || website.subheadline || website.publishedUrl)) {
-    lines.push(`- **Headline:** ${blank(website.headline)}`);
-    lines.push(`- **Subheadline:** ${blank(website.subheadline)}`);
-    lines.push(`- **Hero visual idea:** ${blank(website.heroVisual)}`);
-    lines.push(`- **Primary CTA:** ${blank(website.ctaText)}`);
-    lines.push(`- **Offer headline:** ${blank(website.offerHeadline)}`);
-    lines.push(`- **Offer benefits:**`);
-    lines.push(asList(website.offerBullets));
-    lines.push(`- **Founder name:** ${blank(website.founderName)}`);
-    lines.push(`- **Founder bio:** ${blank(website.founderBio)}`);
-    lines.push(`- **Form type:** ${blank(website.formType)}`);
-    if (website.publishedUrl) {
+    if (final) {
+      lines.push(final);
       lines.push("");
-      lines.push(`🟢 **Published at:** ${website.publishedUrl}`);
     }
-  } else {
-    lines.push(`_Website Builder Wizard not started yet. Open Section 6 to begin._`);
+    if (freeform) {
+      lines.push(`_Founder's notes:_`);
+      lines.push("");
+      lines.push(freeform);
+      lines.push("");
+    }
+    lines.push("---");
+    lines.push("");
   }
+  if (!anySection) {
+    lines.push(
+      `_(No section work captured yet. Run the "📋 Create your FINAL ..." prompt at the bottom of each section, then paste the AI's reply into that section's Final output box. Re-export to fill in this brief.)_`
+    );
+    lines.push("");
+    lines.push("---");
+    lines.push("");
+  }
+
+  // === Website wizard output (only if filled) ===
+  if (website && (website.headline || website.subheadline || website.publishedUrl || website.offerHeadline)) {
+    lines.push(`## Website`);
+    lines.push("");
+    pushKeyValue(lines, "Headline", website.headline);
+    pushKeyValue(lines, "Subheadline", website.subheadline);
+    pushKeyValue(lines, "Hero visual idea", website.heroVisual);
+    pushKeyValue(lines, "Primary CTA", website.ctaText);
+    pushKeyValue(lines, "Offer headline", website.offerHeadline);
+    pushKeyValue(lines, "Offer benefits", website.offerBullets);
+    pushKeyValue(lines, "Founder name", website.founderName);
+    pushKeyValue(lines, "Founder bio", website.founderBio);
+    pushKeyValue(lines, "Form type", website.formType);
+    pushKeyValue(lines, "Published at", website.publishedUrl);
+    lines.push("");
+    lines.push("---");
+    lines.push("");
+  }
+
+  // === Operating instructions for the GPT ===
+  lines.push(`## Operating Instructions for the GPT`);
   lines.push("");
-  lines.push("---");
+  lines.push(`You are an AI co-founder for the business described above. Follow these rules in every response:`);
   lines.push("");
-  lines.push(`_Generated by the COD AI Startup Weekend tool. Re-export anytime to capture your latest progress._`);
+  lines.push(`1. **Ground answers in this brief.** Treat the facts above as authoritative. Do not invent details about the business, customer, pricing, or offer.`);
+  lines.push(`2. **Ask when something is missing.** If a question requires information that isn't in this brief, ask me to provide it instead of guessing.`);
+  lines.push(`3. **Stay on-brand.** When generating copy, posts, scripts, or pitches, match the brand voice, positioning, and pricing options exactly as specified.`);
+  lines.push(`4. **Be specific.** Reference the actual customer, problem, and offer described — generic startup advice is not useful here.`);
+  lines.push(`5. **Push back when needed.** If I ask for something that contradicts the strategy above (e.g. a different price, a different customer), flag the conflict before just complying.`);
+  lines.push("");
+  lines.push(`When in doubt, re-read the sections above. They are the canonical record of this business.`);
+  lines.push("");
+  lines.push(`_End of brief._`);
   lines.push("");
 
   return lines.join("\n");
@@ -171,8 +180,8 @@ function slugify(text) {
 
 export function suggestedFilename(profile) {
   const today = new Date().toISOString().slice(0, 10);
-  const base = slugify(profile.teamName) || slugify(profile.ideaName) || "team";
-  return `cod-startup-workbook-${base}-${today}.md`;
+  const base = slugify(profile.ideaName) || slugify(profile.teamName) || "team";
+  return `${base}-gpt-brief-${today}.md`;
 }
 
 export function downloadWorkbook(content, filename) {
