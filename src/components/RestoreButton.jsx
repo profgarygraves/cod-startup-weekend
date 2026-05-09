@@ -11,12 +11,19 @@ export default function RestoreButton({ sections, label = "📂 Restore from fil
   const fileInputRef = useRef(null);
   const [status, setStatus] = useState(null);
 
+  // Success messages auto-dismiss; errors stick around so the user can read
+  // and copy them.
   const flash = (message, kind = "ok") => {
     setStatus({ message, kind });
-    setTimeout(() => setStatus(null), 4500);
+    if (kind === "ok") {
+      setTimeout(() => setStatus(null), 4500);
+    }
   };
 
+  const dismiss = () => setStatus(null);
+
   const handleClick = () => {
+    dismiss();
     fileInputRef.current?.click();
   };
 
@@ -41,6 +48,8 @@ export default function RestoreButton({ sections, label = "📂 Restore from fil
       setTimeout(() => window.location.reload(), 1200);
     } catch (err) {
       flash(`Couldn't restore: ${err.message}`, "error");
+      // Also log to console so the user can copy from devtools
+      console.error("[COD restore] failed for file:", file?.name, err);
     }
   };
 
@@ -52,13 +61,31 @@ export default function RestoreButton({ sections, label = "📂 Restore from fil
       <input
         ref={fileInputRef}
         type="file"
-        accept="application/json,.json,text/markdown,.md"
+        accept="application/json,.json,text/markdown,.md,text/plain"
         onChange={handleFileSelected}
         style={{ display: "none" }}
       />
       {status && (
         <div className={`backup-bar__status backup-bar__status--${status.kind}`}>
           {status.message}
+          {status.kind === "error" && (
+            <button
+              type="button"
+              onClick={dismiss}
+              style={{
+                marginLeft: "0.5rem",
+                background: "transparent",
+                border: "none",
+                color: "inherit",
+                cursor: "pointer",
+                fontSize: "0.85rem",
+                opacity: 0.7,
+              }}
+              aria-label="Dismiss error"
+            >
+              ✕
+            </button>
+          )}
         </div>
       )}
     </>

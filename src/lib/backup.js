@@ -59,20 +59,66 @@ export function downloadBackup(filename) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+// Normalize file contents: strip BOM, unify line endings to \n. Run on every
+// upload so Windows-saved files, files round-tripped through Word/Docs, etc.
+// don't trip up our regexes.
+function normalizeText(text) {
+  return String(text || "")
+    .replace(/^\uFEFF/, "") // strip BOM
+    .replace(/\r\n?/g, "\n"); // CRLF / CR → LF
+}
+
 export async function restoreBackupFromFile(file, sections) {
-  const text = await file.text();
-  // Auto-detect format: JSON backup vs Markdown GPT brief.
-  // The .md export starts with `<!-- cod-sw-md-version: N -->` (added in
-  // Phase O) or, in older briefs, with `# <name> — Custom GPT Brief`.
-  const sniff = text.trimStart().slice(0, 200);
+  const raw = await file.text();
+  const text = normalizeText(raw);
+  // Auto-detect format. We're generous: if the FILE NAME ends in .md OR the
+  // CONTENT looks Markdown-y in any of several ways, we route to the .md
+  // parser. JSON parse only kicks in if neither is true OR if .md parsing
+  // fails and the file is parseable as JSON.
+  const filenameLower = (file.name || "").toLowerCase();
+  const isMdName = filenameLower.endsWith(".md") || filenameLower.endsWith(".markdown");
+  const isJsonName = filenameLower.endsWith(".json");
+  const head = text.trimStart().slice(0, 400);
   const looksLikeMd =
-    sniff.startsWith("<!--") ||
-    /^#\s.*Custom GPT Brief/m.test(sniff) ||
-    file.name.toLowerCase().endsWith(".md");
-  if (looksLikeMd) {
-    return restoreFromMarkdown(text, sections);
+    isMdName ||
+    head.startsWith("<!--") ||
+    /^#\s.*Custom GPT Brief/m.test(head) ||
+    /##\s+About the Business/m.test(text);
+
+  // Prefer JSON only when the filename clearly says so, or when content
+  // starts with `{` and looks JSON-ish.
+  const looksLikeJson =
+    isJsonName ||
+    (head.startsWith("{") && /"app"\s*:\s*"cod-startup-weekend"/.test(head));
+
+  // Explicit JSON path
+  if (looksLikeJson && !looksLikeMd) {
+    return restoreFromJson(text);
   }
-  return restoreFromJson(text);
+  // Explicit MD path
+  if (looksLikeMd) {
+    try {
+      return restoreFromMarkdown(text, sections);
+    } catch (mdErr) {
+      // Last-ditch: maybe it's actually JSON renamed .md
+      if (head.startsWith("{")) {
+        try {
+          return restoreFromJson(text);
+        } catch {
+          /* fall through to throw the MD error */
+        }
+      }
+      throw mdErr;
+    }
+  }
+  // Ambiguous — try JSON, fall back to MD with diagnostic
+  try {
+    return restoreFromJson(text);
+  } catch {
+    throw new Error(
+      `Couldn't tell what kind of file that is. Expected a .json backup or .md GPT brief from the COD Startup Weekend tool. (First 80 chars: ${JSON.stringify(head.slice(0, 80))})`
+    );
+  }
 }
 
 function restoreFromJson(text) {
@@ -348,29 +394,40 @@ export function parseMarkdownBrief(text, sections) {
   if (!text || typeof text !== "string") {
     throw new Error("Empty file — nothing to restore.");
   }
-  // Sanity check: must look like our format.
-  if (!/##\s+About the Business/m.test(text) && !/cod-sw-md-version/.test(text)) {
+  // Normalize line endings + strip BOM in case the caller didn't.
+  const normalized = normalizeText(text);
+
+  // Forgiving format check: must have at least ONE recognizable signal —
+  // the version marker, an "About the Business" heading, or a "Custom GPT
+  // Brief" title. Any one of these is enough.
+  const hasMarker = /cod-sw-md-version/.test(normalized);
+  const hasAbout = /##\s+About the Business/m.test(normalized);
+  const hasTitle = /^#\s.*Custom GPT Brief/m.test(normalized);
+  if (!hasMarker && !hasAbout && !hasTitle) {
+    const preview = normalized.trim().slice(0, 80).replace(/\n/g, " ");
     throw new Error(
-      "That doesn't look like a COD GPT brief. Make sure you picked the .md file the tool exported."
+      `That doesn't look like a COD GPT brief. The file should start with "# <Business> — Custom GPT Brief" and have an "## About the Business" section. (Got: "${preview}…")`
     );
   }
-  const blocks = splitTopLevelSections(text);
+
+  const blocks = splitTopLevelSections(normalized);
   let profile = null;
   let website = null;
   const notes = {};
   const titleIndex = buildTitleIndex(sections);
 
   for (const block of blocks) {
-    if (block.heading === "About the Business") {
+    const heading = block.heading.trim();
+    if (heading === "About the Business") {
       profile = parseAboutBlock(block.body);
       continue;
     }
-    if (block.heading === "Website") {
+    if (heading === "Website") {
       website = parseWebsiteBlock(block.body);
       continue;
     }
-    if (NON_SECTION_HEADINGS.has(block.heading)) continue;
-    const sectionId = titleIndex.get(block.heading.toLowerCase());
+    if (NON_SECTION_HEADINGS.has(heading)) continue;
+    const sectionId = titleIndex.get(heading.toLowerCase());
     if (!sectionId) continue;
     const { final, notes: freeform } = parseSectionBody(block.body);
     if (final || freeform) {
