@@ -61,7 +61,10 @@ export default function RestoreButton({ sections, label = "📂 Restore from fil
       <input
         ref={fileInputRef}
         type="file"
-        accept="application/json,.json,text/markdown,.md,text/plain"
+        // Extensions only — MIME-type accepts are flaky across browsers
+        // (some block .md when the OS doesn't have a registered MIME for it).
+        // Content-sniffing in lib/backup.js does the real validation.
+        accept=".json,.md,.markdown,.txt"
         onChange={handleFileSelected}
         style={{ display: "none" }}
       />
