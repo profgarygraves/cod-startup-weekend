@@ -36,6 +36,7 @@ const INITIAL_PROFILE = {
   audience: "",
   offer: "",
   price: "",
+  visualPrototypeNotes: "",
 };
 
 const INITIAL_WEBSITE = {
@@ -99,7 +100,6 @@ export default function App() {
         <ProgressTracker progress={progress} />
         <ExportWorkbook
           profile={profile}
-          statuses={statuses}
           website={website}
           notes={notes}
           sections={ALL_SECTIONS}
@@ -145,6 +145,8 @@ export default function App() {
                 status={statuses[s.id]}
                 onStatusChange={handleStatusChange}
                 profile={profile}
+                notes={notes}
+                onNotesChange={handleNotesChange}
                 extra={s.id === "digital-presence" ? <WebsiteWizard profile={profile} /> : null}
               />
             ))}

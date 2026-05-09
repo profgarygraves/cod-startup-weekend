@@ -76,6 +76,15 @@ export const DAY1_SECTIONS = [
           "We have a team of [X] people building [insert idea] this weekend. Suggest a clean way to split four ownership areas: customer/market, build/prototype, brand/marketing, and money/operations. Then propose a 5-minute daily check-in format we should use to stay coordinated.",
         ],
       },
+      {
+        task: "📋 Create your FINAL Business Idea (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Run this prompt to compile everything from this section into one clean block, then paste the AI's reply into the 📋 Final output box of your notebook. That block is what gets exported to your custom GPT brief — it becomes the canonical description of your business going forward.",
+        prompts: [
+          "Create a FINAL Business Idea description for [insert idea] that I will paste into my workbook. Include exactly: (1) the chosen idea in 1 sentence, (2) the problem it solves, (3) the solution / how it works, (4) the value proposition in this exact format: \"For [target customer], who [pain], [business name] is a [category] that [unique benefit] unlike [alternative].\" Keep it tight — no bullet padding, no preamble. Output ONLY the final text I should paste in.",
+        ],
+      },
     ],
   },
   {
@@ -159,6 +168,15 @@ export const DAY1_SECTIONS = [
           "Help me build a list of 10 specific real people I could reach out to this weekend who fit this customer profile: [audience]. Suggest where to find them (specific places, groups, classes, subreddits, Discord servers). For each suggestion, give me a one-sentence opener I could send.",
         ],
       },
+      {
+        task: "📋 Create your FINAL Market & Customer Brief (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Run this prompt to compile your industry, competitor, persona, and customer-list work into one clean block, then paste the AI's reply into the 📋 Final output box of your notebook. That block becomes part of your custom GPT brief so the GPT knows your market.",
+        prompts: [
+          "Create a FINAL Market & Customer Brief for [insert idea] in [market area] that I will paste into my workbook. Include in this exact order: (1) industry one-liner — size, growth, key trend; (2) top 3 competitors, one line each, plus the gap I'm exploiting; (3) primary persona — name, age, situation, top frustration, top goal, where to find them; (4) my 10 specific real first-customer prospects (or the channels to find them); (5) my Unique Selling Proposition in one sentence. No filler. Output ONLY the final text I should paste in.",
+        ],
+      },
     ],
   },
   {
@@ -223,6 +241,15 @@ export const DAY1_SECTIONS = [
           "The Lean Canvas is the one-page business model invented for startups (vs. the larger Business Model Canvas for established businesses). Filling all 9 boxes in 30 minutes forces every assumption to surface — and reveals which ones are weakest. The boxes you can't confidently fill in are the experiments you should run next week.",
         prompts: [
           "Fill in a complete Lean Canvas for [insert idea]. Walk through all 9 boxes in this order: Problem (top 3), Customer Segments, Unique Value Proposition, Solution, Channels, Revenue Streams, Cost Structure, Key Metrics, and Unfair Advantage. Be specific — no fluff. Format as a clear list I can copy into a doc.",
+        ],
+      },
+      {
+        task: "📋 Create your FINAL Pricing & Business Model (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Compile your pricing strategy, revenue path, and Lean Canvas into one clean block, then paste it into the 📋 Final output box of your notebook. The GPT will use this to answer pricing and business-model questions about your business.",
+        prompts: [
+          "Create a FINAL Pricing & Business Model summary for [insert idea] that I will paste into my workbook. Include: (1) chosen pricing strategy and the price(s) — single price or tiered options written out plainly; (2) the path to $1,000/month — which scenario I picked, how many customers, at what price, with what conversion rate; (3) the Lean Canvas in 9 short lines (Problem / Customer Segments / UVP / Solution / Channels / Revenue Streams / Cost Structure / Key Metrics / Unfair Advantage). Each line under 20 words. Output ONLY the final text I should paste in.",
         ],
       },
     ],
@@ -302,6 +329,15 @@ export const DAY1_SECTIONS = [
           ],
         },
       },
+      {
+        task: "📋 Create your FINAL Prototype + Offer Description (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Compile your prototype description, offer, and sample deliverable into one clean block. For most ventures the prototype is a physical product mockup or a service workflow — not a website. Paste the result into the 📋 Final output box of your notebook so the GPT understands exactly what you're selling.",
+        prompts: [
+          "Create a FINAL Prototype + Offer description for [insert idea] that I will paste into my workbook. Include: (1) what the prototype IS in concrete terms — for a service, the step-by-step workflow; for a product, the physical-product spec (materials, look, packaging); for a digital product, the screen-by-screen wireframe or demo URL; (2) the written offer description: what the customer gets, what's included (3-5 bullets), the price(s), the guarantee or risk-reversal, and how to start; (3) the sample deliverable I'm using as proof. Format clearly so a stranger reading this knows exactly what I'm selling. Output ONLY the final text I should paste in.",
+        ],
+      },
     ],
   },
 ];
@@ -323,7 +359,10 @@ export const DAY2_SECTIONS = [
       "Business card and one-page flyer designed",
     ],
     tools: [
-      { name: "Canva AI", url: "https://canva.com", icon: "🎨" },
+      { name: "Canva", url: "https://canva.com", icon: "🎨" },
+      { name: "Adobe Express", url: "https://www.adobe.com/express/", icon: "🅰️" },
+      { name: "ChatGPT (image gen)", url: "https://chatgpt.com", icon: "🤖" },
+      { name: "Gemini · Nano Banana", url: "https://gemini.google.com", icon: "🍌" },
       { name: "Microsoft Designer", url: "https://designer.microsoft.com", icon: "🖼️" },
       { name: "Ideogram", url: "https://ideogram.ai", icon: "🔠" },
       { name: "Hatchful", url: "https://hatchful.shopify.com", icon: "🐣" },
@@ -331,7 +370,7 @@ export const DAY2_SECTIONS = [
       { name: "Porkbun", url: "https://porkbun.com", icon: "🐷" },
       { name: "Cloudflare Domains", url: "https://www.cloudflare.com/products/registrar/", icon: "🟧" },
     ],
-    tips: "Your brand should feel like it costs 10× what you charge. First impressions are everything — invest the time here.",
+    tips: "Your brand should feel like it costs 10× what you charge. First impressions are everything — invest the time here. For printed items (business card, flyer), build them in Adobe Express or Canva — both are free and have print-ready templates.",
     taskPrompts: [
       {
         task: "Generate brand name candidates",
@@ -371,6 +410,39 @@ export const DAY2_SECTIONS = [
           "Your domain is the one piece of brand identity you can't easily change later. Spend 10 minutes on this — short, easy to spell, no weird hyphens. .com is still the gold standard but .ai, .co, and .io are all credible for tech-flavored businesses. Buy it now even if you don't launch this weekend; squatters cost more than $10/year.",
         prompts: [
           "Suggest 10 domain name options for [business name]. Mix .com, .co, .ai, .io, and creative TLDs. Each should be 12 characters or fewer in the SLD. Note any obvious squatter risks. End with a top-3 ranked list and what to check before buying.",
+        ],
+      },
+      {
+        task: "Design and generate your logo (use ChatGPT or Gemini's Nano Banana)",
+        lesson:
+          "Your logo is the visual shorthand for your brand — it goes on the website, business card, flyer, and every social post. AI can't out-design a senior brand designer, but ChatGPT (with image generation on) and Google Gemini's Nano Banana can give you a usable first draft in under 5 minutes. Generate 5–10 directions, pick the strongest, then refine in Canva. Match it to your style guide so colors, fonts, and feel stay consistent.",
+        prompts: [
+          "Write a complete logo image-generation prompt I can paste directly into ChatGPT (with image generation on) or Google Gemini (Nano Banana) to create a logo for [business name]: [insert idea]. The prompt should specify: (1) logo style — pick ONE that fits a [venture type] best from: minimal wordmark, modern icon-with-text, hand-drawn, mascot, monogram, abstract symbol, badge/crest; (2) primary color and accent color with hex codes pulled from my brand style guide; (3) the mood in 3 adjectives; (4) what to AVOID — clichés, stock-photo look, busy gradients, generic icons. Then give me 3 alternative prompts I can try in different styles if the first doesn't hit. Each prompt should be one paragraph I can copy in one click.",
+        ],
+      },
+      {
+        task: "Design your business card (build in Adobe Express or Canva)",
+        lesson:
+          "Business cards are the most-used physical brand asset for student founders — networking events, judges' tables, campus connections. AI writes the copy and decides the layout; Adobe Express and Canva each have hundreds of free print-ready templates that do the heavy design lifting. Pick whichever you're already logged into. The discipline of fitting your business onto a 3.5\" × 2\" card forces you to pick the ONE thing about your brand that matters most.",
+        prompts: [
+          "Help me design a business card for [business name]: [insert idea]. Give me the complete spec: (1) FRONT — name + role/title, business name, tagline (use the one I picked), one line of contact (the most important one — pick from email / phone / Instagram / website), and where the logo goes; (2) BACK — value-prop sentence, website or QR code direction (what URL it points to), 2–3 social handles or contact methods, and the QR code's destination; (3) layout direction — 2-color minimal, photo-back, full-color, etc. — that matches my brand style guide; (4) the exact template search term to use in BOTH Adobe Express AND Canva (e.g. \"minimal modern business card\") and the standard dimensions (3.5\" × 2\" / 1050 × 600 px / bleed 0.125\"). Output as a checklist I can tick off while building it in Adobe Express or Canva.",
+        ],
+      },
+      {
+        task: "Design a one-page flyer (build in Adobe Express or Canva)",
+        lesson:
+          "A one-page flyer is the cheapest in-person customer-acquisition tool you can print this weekend — events, bulletin boards, sponsor counters. Build it in Adobe Express or Canva — both are free and export print-ready PDFs. Forcing your offer onto a single page is also the best clarity test there is: if it doesn't fit, your offer isn't tight enough yet. Pair this with your business card so the QR code on both points to the same place.",
+        prompts: [
+          "Design a one-page flyer for [business name]: [insert idea]. Give me the complete content and layout: (1) headline (under 8 words — pattern-interrupt or value-prop hook); (2) subheadline (under 20 words explaining the offer); (3) 3 benefit bullets a passerby can scan in 5 seconds; (4) one line of social proof, guarantee, or risk-reversal; (5) the call-to-action — what to do next (call, scan, visit, sign up); (6) QR code destination URL and what page it loads; (7) layout direction — where the logo goes, where the hero image goes (give me an image-gen prompt for that too if relevant), where the QR code goes; (8) the template search term to use in BOTH Adobe Express AND Canva (\"modern flyer\", \"event flyer\", etc.) and orientation (portrait 8.5\" × 11\" / A4). Output as a checklist I can tick off while building it in Adobe Express or Canva.",
+        ],
+      },
+      {
+        task: "📋 Create your FINAL Brand Kit (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Compile your name, tagline, voice, colors, fonts, domain, logo, business card, and flyer into one clean reference card, then paste it into the 📋 Final output box of your notebook. The GPT uses this so any future copy, posts, or designs stay on-brand.",
+        prompts: [
+          "Create a FINAL Brand Kit for [business name] that I will paste into my workbook. Include in this exact order: (1) chosen business name + 1-line rationale; (2) chosen tagline; (3) brand voice — 5 adjectives; (4) color palette — 3 hex codes labeled primary / accent / neutral; (5) font pairing — heading + body (both Google Fonts); (6) chosen domain name; (7) LOGO — 1–2 sentence description of the logo I generated + where to find it (Canva link, file path, or URL); (8) BUSINESS CARD — 1–2 sentence description + link/file; (9) FLYER — 1–2 sentence description + link/file. Where I haven't yet pasted in a link, leave a clearly marked placeholder like \"[paste link]\" so I can fill it in. Format as a clean reference card. Output ONLY the final text I should paste in.",
         ],
       },
     ],
@@ -447,6 +519,15 @@ export const DAY2_SECTIONS = [
           "I want to launch a simple landing page this weekend. Suggest the simplest 3-page structure for [insert idea] and which AI website builder I should use (Framer.ai, Carrd, Wix ADI, or Canva) given a beginner's skill level and 1 hour of time.",
         ],
       },
+      {
+        task: "📋 Create your FINAL Website & Social Brief (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Compile your homepage copy, commercial script, and social posts into one clean block, then paste it into the 📋 Final output box of your notebook. The GPT uses this to generate consistent on-brand content for you later.",
+        prompts: [
+          "Create a FINAL Website & Social Brief for [business name]: [insert idea] that I will paste into my workbook. Include: (1) homepage hero — headline (under 10 words), subheadline (under 25 words), primary CTA button text; (2) 3 benefit bullets; (3) about-the-founder paragraph (2 sentences); (4) the 30-second commercial script in beat form (HOOK / PROBLEM / SOLUTION / PROOF / CTA, with shot direction for each); (5) the 5 social launch posts — each with caption, 1-line visual idea, and hashtags. Skip prep notes — final outputs only. Output ONLY the final text I should paste in.",
+        ],
+      },
     ],
   },
   {
@@ -520,6 +601,15 @@ export const DAY2_SECTIONS = [
           "Write a short, personal outreach message I could send to 50 warm contacts for [insert idea]. Make it under 5 sentences, mention I'm in a startup weekend, ask for one specific thing (not a sale — feedback, an intro, or 5 minutes of their time), and end with no pressure. Give me 3 versions in different tones: friendly, professional, and direct.",
         ],
       },
+      {
+        task: "📋 Create your FINAL $50 Marketing Plan (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Compile your STP positioning, budget allocation, ad creatives, and outreach DM into one clean block, then paste it into the 📋 Final output box of your notebook. The GPT uses this to help you adapt and iterate on marketing later.",
+        prompts: [
+          "Create a FINAL $50 Marketing Plan for [insert idea] targeting [audience] that I will paste into my workbook. Include: (1) STP — segment chosen, target description, positioning statement in this format: \"For [target], who [need], [business name] is the [category] that [benefit] because [proof].\"; (2) the $50 budget allocation across channels with one-line rationale per channel; (3) the 3 ad creatives (each with hook / body / CTA / visual idea — angles: pain-led / outcome-led / curiosity-led); (4) the warm-outreach DM template for 50 contacts. No commentary — final outputs only. Output ONLY the final text I should paste in.",
+        ],
+      },
     ],
   },
   {
@@ -582,6 +672,15 @@ export const DAY2_SECTIONS = [
           "Generate the 10 hardest questions a judge or VC could ask about [insert idea] — covering market size, competition, team experience, pricing, scalability, defensibility, and what happens if [obvious threat]. For each question, write a 2-sentence confident answer I could deliver under pressure. Flag the 2 questions where my answer is weakest and tell me what to research before the pitch.",
         ],
       },
+      {
+        task: "📋 Create your FINAL Pitch Package (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Compile your Vision, Mission, SMART goals, 10-slide outline, the Ask, and Q&A prep into one clean block, then paste it into the 📋 Final output box of your notebook. The GPT uses this to coach you on future pitches and rehearse against tough questions.",
+        prompts: [
+          "Create a FINAL Pitch Package for [insert idea] that I will paste into my workbook. Include in this exact order: (1) Vision (1 sentence, ambitious); (2) Mission (1 sentence, concrete); (3) 3 SMART Goals for the next 90 days; (4) the 10-slide deck — for each slide: headline + max 3 bullets + 1 visual direction (slides: Hook, Problem, Solution, Demo, Market & Customer, Business Model, Traction, Team, The Ask, Close); (5) the Ask in one sentence; (6) the 10 hardest Q&A questions, each with a 2-sentence confident answer. Format so I can present from this directly. Output ONLY the final text I should paste in.",
+        ],
+      },
     ],
   },
 ];
@@ -642,6 +741,15 @@ export const POST_SECTIONS = [
           "Quarterly Go/No-Go decisions force honest self-assessment. The best founders kill ideas that aren't working — pivoting or shutting down isn't failure, it's discipline. The worst founders keep going because they can't admit when it's broken. Sunk-cost thinking is the most expensive mistake at this stage.",
         prompts: [
           "I made $[X] last month working on [insert idea]. Help me make a Go / No-Go / Pivot call. Diagnose: (1) what's working, (2) what's not, (3) what assumptions have been validated or broken. Recommend GO (double down), NO-GO (shut it down), or PIVOT (change a key assumption). Give me 3 specific actions for the next 30 days based on your call.",
+        ],
+      },
+      {
+        task: "📋 Create your FINAL 30/60/90-Day Plan (paste into workbook)",
+        isFinal: true,
+        lesson:
+          "This is the wrap-up step. Compile your milestones, weekly Customer Discovery script, monthly Feasibility checklist, and quarterly Go/No-Go criteria into one operating playbook, then paste it into the 📋 Final output box of your notebook. The GPT uses this as your accountability rhythm post-weekend.",
+        prompts: [
+          "Create a FINAL 30/60/90-Day Growth Plan for [insert idea] that I will paste into my workbook. Include: (1) for each phase (30 / 60 / 90 days): 3 SMART goals, the 1 metric that matters most, and the 1 thing to STOP doing; (2) the weekly Customer Discovery interview script in short form (3 opening / 5 problem-discovery / 2 solution-test / 1 willingness-to-pay question); (3) the monthly Feasibility-Analysis template — Organizational / Financial / Market, each with a 1–10 score line and a 1-sentence check; (4) the quarterly Go / No-Go / Pivot decision criteria. This is my operating playbook for the next quarter. Output ONLY the final text I should paste in.",
         ],
       },
     ],
