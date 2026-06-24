@@ -1,4 +1,4 @@
-export const STORAGE_KEYS = ["cod-sw-profile", "cod-sw-statuses", "cod-sw-website", "cod-sw-notes"];
+export const STORAGE_KEYS = ["cod-sw-profile", "cod-sw-statuses", "cod-sw-website", "cod-sw-notes", "cod-sw-plan"];
 const APP_TAG = "cod-startup-weekend";
 const MD_VERSION = 1;
 

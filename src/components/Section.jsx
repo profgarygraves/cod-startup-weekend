@@ -239,50 +239,29 @@ export default function Section({
           {/* Section-specific extra (e.g. Website Wizard) */}
           {extra}
 
-          {/* Notebook (per-section notes — split into Final output + Notes) */}
+          {/* Notebook (per-section FINAL output only — decisions live in the top-level Plan) */}
           {onNotesChange && (
             <div className="section-block section-block--notebook">
-              <div className="section-block__label">📓 Your notebook for this section</div>
+              <div className="section-block__label">📋 Final output for this section</div>
               <p className="section-block__sub">
-                Saved to your browser and included in your downloadable workbook.
+                Paste the AI's reply to the FINAL prompt here. This is the canonical record of this section
+                and what gets fed into your Custom GPT brief.
               </p>
-
-              <div className="section-notebook__field section-notebook__field--final">
-                <label className="section-notebook__field-label">
-                  📋 Final output (paste AI's reply to the FINAL prompt here)
-                </label>
-                <p className="section-notebook__field-hint">
-                  This is what gets fed to your custom GPT — the canonical record of this section.
-                </p>
-                <textarea
-                  className="section-notebook__textarea section-notebook__textarea--final"
-                  value={sectionNote.final}
-                  rows={6}
-                  placeholder="Paste the AI's response to the FINAL prompt above…"
-                  onChange={(e) => updateNoteField("final", e.target.value)}
-                />
-                {sectionNote.final && (
-                  <div className="section-notebook__meta">
-                    ✓ {sectionNote.final.length.toLocaleString()} characters in Final output
-                  </div>
-                )}
-              </div>
-
-              <div className="section-notebook__field">
-                <label className="section-notebook__field-label">
-                  📝 Notes / scratch (just for you)
-                </label>
-                <p className="section-notebook__field-hint">
-                  Decisions, links, reminders. Not included in the GPT brief.
-                </p>
-                <textarea
-                  className="section-notebook__textarea"
-                  value={sectionNote.notes}
-                  rows={3}
-                  placeholder="Jot decisions, drop links, write reminders…"
-                  onChange={(e) => updateNoteField("notes", e.target.value)}
-                />
-              </div>
+              <textarea
+                className="section-notebook__textarea section-notebook__textarea--final"
+                value={sectionNote.final}
+                rows={6}
+                placeholder="Paste the AI's response to the FINAL prompt above…"
+                onChange={(e) => updateNoteField("final", e.target.value)}
+              />
+              {sectionNote.final && (
+                <div className="section-notebook__meta">
+                  ✓ {sectionNote.final.length.toLocaleString()} characters in Final output
+                </div>
+              )}
+              <p className="section-notebook__decisions-link">
+                💡 Want to jot a decision, link, or reminder? Use the <strong>📋 Plan & Decisions</strong> card up top — one shared spot for everything that isn't a section's Final output.
+              </p>
             </div>
           )}
 
