@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { buildWorkbook, suggestedFilename, downloadWorkbook } from "../lib/export";
 
-export default function ExportWorkbook({ profile, website, notes, sections }) {
+export default function ExportWorkbook({ profile, website, notes, plan, sections }) {
   const [justDownloaded, setJustDownloaded] = useState(false);
 
   const handleDownload = () => {
-    const content = buildWorkbook({ profile, website, notes, sections });
+    const content = buildWorkbook({ profile, website, notes, plan, sections });
     downloadWorkbook(content, suggestedFilename(profile));
     setJustDownloaded(true);
     setTimeout(() => setJustDownloaded(false), 2500);
   };
 
   const handlePreview = () => {
-    const content = buildWorkbook({ profile, website, notes, sections });
+    const content = buildWorkbook({ profile, website, notes, plan, sections });
     const win = window.open("", "_blank");
     if (!win) return;
     const safe = content.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);

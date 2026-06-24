@@ -57,7 +57,15 @@ function pushKeyValue(lines, label, value) {
   }
 }
 
-export function buildWorkbook({ profile, website, notes, sections }) {
+const GOAL_LABELS = {
+  goals30: "30 days",
+  goals60: "60 days",
+  goals90: "90 days",
+  goals120: "120 days",
+  goals180: "180 days — $1,000/month finish line",
+};
+
+export function buildWorkbook({ profile, website, notes, plan, sections }) {
   const today = new Date().toISOString().slice(0, 10);
   const businessName = trimOrNull(profile.ideaName) || trimOrNull(profile.teamName) || "My Business";
 
@@ -157,6 +165,36 @@ export function buildWorkbook({ profile, website, notes, sections }) {
     lines.push("");
     lines.push("---");
     lines.push("");
+  }
+
+  // === Plan: decisions log + 5 milestone goals ===
+  if (plan) {
+    const decisions = trimOrNull(plan.decisions);
+    const goalEntries = Object.entries(GOAL_LABELS)
+      .map(([key, label]) => [label, trimOrNull(plan[key])])
+      .filter(([, v]) => v);
+    if (decisions || goalEntries.length > 0) {
+      lines.push(`## Plan, Decisions & 6-Month Goals`);
+      lines.push("");
+      if (decisions) {
+        lines.push(`### 📌 Decisions Log`);
+        lines.push("");
+        lines.push(decisions);
+        lines.push("");
+      }
+      if (goalEntries.length > 0) {
+        lines.push(`### 🎯 6-Month Milestone Goals`);
+        lines.push("");
+        for (const [label, value] of goalEntries) {
+          lines.push(`**${label}:**`);
+          lines.push("");
+          lines.push(value);
+          lines.push("");
+        }
+      }
+      lines.push("---");
+      lines.push("");
+    }
   }
 
   // === Operating instructions for the GPT ===

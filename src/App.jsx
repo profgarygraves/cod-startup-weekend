@@ -13,8 +13,10 @@ import BackupActions from "./components/BackupActions";
 import IdeaBrowser from "./components/IdeaBrowser";
 import RefreshPromptsButton from "./components/RefreshPromptsButton";
 import PlayLabSetup from "./components/PlayLabSetup";
+import Plan, { PLAN_INITIAL } from "./components/Plan";
 import { DAY1_SECTIONS, DAY2_SECTIONS, POST_SECTIONS } from "./data/sections";
 import { usePersistentState } from "./lib/storage";
+import { useEffect } from "react";
 import "./App.css";
 
 const ALL_SECTIONS = [...DAY1_SECTIONS, ...DAY2_SECTIONS, ...POST_SECTIONS];
@@ -54,11 +56,58 @@ const INITIAL_WEBSITE = {
 
 const INITIAL_NOTES = {};
 
+// One-time migration: pull each section's old { notes } scratchpad text
+// into a single Plan.decisions log, prefixed with the section's title.
+// Triggered only when Plan.decisions is empty AND at least one section has
+// legacy `.notes` content AND we haven't already migrated.
+function migrateLegacyNotesIntoPlan(notes, plan, sections) {
+  if (!notes || !plan) return null;
+  if (plan._migratedSectionNotes) return null;
+  if ((plan.decisions || "").trim()) {
+    return { ...plan, _migratedSectionNotes: true };
+  }
+  const blocks = [];
+  const cleanedNotes = {};
+  let migratedAny = false;
+  for (const s of sections) {
+    const v = notes[s.id];
+    if (v && typeof v === "object" && (v.notes || "").trim()) {
+      blocks.push(`**${s.title}**\n${v.notes.trim()}`);
+      cleanedNotes[s.id] = { final: v.final || "" };
+      migratedAny = true;
+    } else if (typeof v === "string" && v.trim()) {
+      blocks.push(`**${s.title}**\n${v.trim()}`);
+      migratedAny = true;
+    } else if (v) {
+      cleanedNotes[s.id] = v;
+    }
+  }
+  if (!migratedAny) return { plan: { ...plan, _migratedSectionNotes: true }, notes };
+  return {
+    plan: {
+      ...plan,
+      decisions: blocks.join("\n\n"),
+      _migratedSectionNotes: true,
+    },
+    notes: { ...notes, ...cleanedNotes },
+  };
+}
+
 export default function App() {
   const [statuses, setStatuses] = usePersistentState("cod-sw-statuses", INITIAL_STATUSES);
   const [profile, setProfile] = usePersistentState("cod-sw-profile", INITIAL_PROFILE);
   const [website] = usePersistentState("cod-sw-website", INITIAL_WEBSITE);
   const [notes, setNotes] = usePersistentState("cod-sw-notes", INITIAL_NOTES);
+  const [plan, setPlan] = usePersistentState("cod-sw-plan", PLAN_INITIAL);
+
+  // Run the one-time legacy-notes → Plan.decisions migration on mount.
+  useEffect(() => {
+    const result = migrateLegacyNotesIntoPlan(notes, plan, ALL_SECTIONS);
+    if (!result) return;
+    if (result.plan) setPlan(result.plan);
+    if (result.notes) setNotes(result.notes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleStatusChange = useCallback((id, status) => {
     setStatuses((prev) => ({ ...prev, [id]: status }));
@@ -98,10 +147,12 @@ export default function App() {
           onAdoptIdea={(patch) => setProfile({ ...profile, ...patch })}
         />
         <ProgressTracker progress={progress} />
+        <Plan profile={profile} plan={plan} onChange={setPlan} />
         <ExportWorkbook
           profile={profile}
           website={website}
           notes={notes}
+          plan={plan}
           sections={ALL_SECTIONS}
         />
         <BackupActions profile={profile} sections={ALL_SECTIONS} />
